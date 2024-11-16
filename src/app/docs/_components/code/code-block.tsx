@@ -13,7 +13,7 @@ interface CodeBlockProps {
 
 const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
   return (
-    <div className="relative rounded-lg overflow-hidden mb-4 shadow-lg">
+    <div className="relative rounded-lg overflow-hidden mb-4">
       <div className="relative">
         <SyntaxHighlighter
           language={language}

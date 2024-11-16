@@ -1,7 +1,6 @@
 import { source } from "@/lib/source";
 import { DocsBody, DocsDescription, DocsTitle } from "fumadocs-ui/page";
 import { notFound } from "next/navigation";
-import { components } from "@/components/common/mdx-components";
 import dynamic from "next/dynamic";
 import { cn, extractText } from "@/lib/utils";
 import React from "react";
@@ -57,15 +56,15 @@ export default async function Page(props: {
   const params = await props.params;
   const page = source.getPage(params.slug);
   if (!page) notFound();
-
   const MDX = page.data.body;
-  console.log(components);
   return (
     <div className="flex flex-col" suppressHydrationWarning>
       {" "}
-      <DocsTitle>{page.data.title}</DocsTitle>
-      <DocsDescription>{page.data.description}</DocsDescription>
-      <DocsBody>
+      <DocsTitle className="font-bold text-3xl">{page.data.title}</DocsTitle>
+      <DocsDescription className="py-4 font-normal dark:text-gray-400 text-gray-600">
+        {page.data.description}
+      </DocsDescription>
+      <DocsBody className="pt-2">
         <MDX
           suppressHydrationWarning
           components={{
@@ -269,7 +268,6 @@ export default async function Page(props: {
               className,
               ...props
             }: React.HTMLAttributes<HTMLElement>) => {
-              console.log("ClassName: ", className);
               const codeString = extractText(children);
               const language =
                 codeString.includes("npm") || codeString.includes("npx")
@@ -295,18 +293,20 @@ export default async function Page(props: {
             },
             Image,
             CodeBlock,
-            Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
-              <h3
-                className={cn(
-                  "font-heading mt-8 scroll-m-20 text-xl font-semibold tracking-tight",
-                  className
-                )}
+            Steps: ({ ...props }) => (
+              <div
+                className="steps mb-12 ml-4 border-l border-[#dcdcdd] dark:border-[#27272A] pl-8 [counter-reset:step]"
                 {...props}
               />
             ),
-            Steps: ({ ...props }) => (
-              <div
-                className="[&>h3]:step steps mb-12 ml-4 border-l pl-8 [counter-reset:step]"
+            Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
+              <h3
+                className={cn(
+                  "step font-heading mt-8 scroll-m-20 text-xl font-semibold tracking-tight relative pl-8",
+                  "before:absolute before:left-[-3rem] before:top-1/2 before:-translate-y-1/2 before:h-7 before:w-7 before:rounded-full before:flex before:items-center before:justify-center before:bg-[#F4F4F5] before:dark:bg-[#27272A] before:text-black before:dark:text-white before:content-[counter(step)]",
+                  "[counter-increment:step]",
+                  className
+                )}
                 {...props}
               />
             ),
