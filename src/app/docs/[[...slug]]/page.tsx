@@ -1,5 +1,5 @@
 import { source } from "@/lib/source";
-import { DocsBody, DocsDescription, DocsTitle } from "fumadocs-ui/page";
+import { DocsDescription, DocsTitle } from "fumadocs-ui/page";
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
 import { cn, extractText } from "@/lib/utils";

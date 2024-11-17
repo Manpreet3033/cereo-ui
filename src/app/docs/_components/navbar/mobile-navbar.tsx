@@ -6,7 +6,6 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { getSidebarProps } from "../../actions/actions";
 import Link from "next/link";

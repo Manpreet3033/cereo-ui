@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/provider/theme-provider";
-import { RootProvider } from "fumadocs-ui/provider";
 import KBar from "../components/kbar";
 
 const geistSans = localFont({

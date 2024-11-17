@@ -1,4 +1,3 @@
-import { Menu } from "lucide-react";
 import Link from "next/link";
 import ThemeSwitcher from "../buttons/theme-switcher";
 import MobileNav from "./mobile-navbar";
