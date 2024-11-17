@@ -11,7 +11,6 @@ import {
   Priority,
 } from "kbar";
 import RenderResult from "./render-result";
-import { useLocalStorage } from "usehooks-ts";
 import { getSidebarProps } from "@/app/docs/actions/actions";
 
 interface SideBarProps {
