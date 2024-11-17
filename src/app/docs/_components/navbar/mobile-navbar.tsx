@@ -19,7 +19,7 @@ const MobileNav = async ({ params }: { params: { slug: [string] } }) => {
       <DrawerTrigger className="flex items-center mr-2">
         <Menu />
       </DrawerTrigger>
-      <DrawerContent className="flex justify-start items-start min-h-[50%]">
+      <DrawerContent className="flex justify-start items-start min-h-[50%] dark:bg-black">
         <DrawerHeader>
           <DrawerTitle>Components</DrawerTitle>
         </DrawerHeader>
