@@ -1,7 +1,7 @@
 import React from "react";
 import LeftSidebar from "../_components/side-bar/left-sidebar";
 import RightSidebar from "../_components/side-bar/right-sidebar";
-import Header from "../_components/header";
+import Header from "../_components/navbar/header";
 
 type Props = {
   children: React.ReactNode;
@@ -11,7 +11,7 @@ type Props = {
 const Layout = ({ children, params }: Props) => {
   return (
     <div className="min-h-screen" suppressHydrationWarning>
-      <Header />
+      <Header params={params} />
       <div className=" flex flex-1 pt-16 flex-col lg:flex-row">
         <div className="w-60 lg:block hidden">
           <LeftSidebar params={params} />

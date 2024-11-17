@@ -6,9 +6,9 @@ export async function getSidebarProps() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const allSections: any[] = source.getPages();
   const filteredSections = allSections.map((section) => ({
-    title: section.data.title,
-    url: section.url,
-    slug: section.slugs,
+    title: section.data.title as string,
+    url: section.url as string,
+    slug: section.slugs as string[],
   }));
   return filteredSections;
 }

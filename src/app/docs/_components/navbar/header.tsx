@@ -1,37 +1,29 @@
 import { Menu } from "lucide-react";
-import ThemeSwitcher from "./buttons/theme-switcher";
 import Link from "next/link";
+import ThemeSwitcher from "../buttons/theme-switcher";
+import MobileNav from "./mobile-navbar";
 
-export default function Header() {
+export default function Header({ params }: { params: { slug: [string] } }) {
   return (
     <header className="fixed top-0 gap-2 z-40 w-full border-b dark:border-gray-800 border-gray-300 dark:bg-black/50 backdrop-blur-lg">
       <div className="mx-auto max-w-screen-2xl flex h-16 items-center justify-between px-4">
         <div className="flex items-center">
           <div className="lg:hidden">
-            <button className="p-2 hover:bg-gray-800 rounded-lg">
-              <Menu className="h-5 w-5" />
-            </button>
+            <MobileNav params={params} />
           </div>
           <div className="flex items-center">
             <Link href="/" className="text-xl font-bold mr-2 lg:mr-6">
               CereoUI
             </Link>
             <nav className="hidden lg:flex items-center lg:gap-6 gap-4 md:mr-4">
-              {[
-                "Docs",
-                "Components",
-                "Templates",
-                "Blocks",
-                "Examples",
-                "Themes",
-              ].map((item) => (
-                <a
+              {["Components"].map((item) => (
+                <Link
                   key={item}
-                  href="#"
+                  href="/docs/accordion"
                   className="dark:text-gray-400 dark:hover:text-white text-black text-sm"
                 >
                   {item}
-                </a>
+                </Link>
               ))}
             </nav>
           </div>

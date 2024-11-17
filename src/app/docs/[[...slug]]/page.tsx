@@ -64,7 +64,7 @@ export default async function Page(props: {
       <DocsDescription className="py-4 font-normal dark:text-gray-400 text-gray-600">
         {page.data.description}
       </DocsDescription>
-      <DocsBody className="pt-2">
+      <div className="flex flex-col mt-2">
         <MDX
           suppressHydrationWarning
           components={{
@@ -369,7 +369,7 @@ export default async function Page(props: {
             ),
           }}
         />
-      </DocsBody>
+      </div>
     </div>
   );
 }

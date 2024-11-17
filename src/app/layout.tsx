@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/provider/theme-provider";
 import { RootProvider } from "fumadocs-ui/provider";
+import KBar from "../components/kbar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,7 +29,7 @@ export default function RootLayout({
     >
       <body suppressHydrationWarning>
         <ThemeProvider attribute="class" enableSystem>
-          <RootProvider>{children}</RootProvider>
+          <KBar>{children}</KBar>
         </ThemeProvider>
       </body>
     </html>
