@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import {
   KBarAnimator,
@@ -10,7 +9,6 @@ import {
   Action,
 } from "kbar";
 import RenderResult from "./render-result";
-import { getSidebarProps } from "@/app/docs/actions/actions";
 
 interface SideBarProps {
   title: string;
@@ -18,18 +16,11 @@ interface SideBarProps {
   slug: string[];
 }
 import { useRouter } from "next/navigation";
+import { getSidebarProps } from "@/lib/utils";
 
 export default function KBar({ children }: { children: React.ReactNode }) {
-  const [sections, setSections] = React.useState<SideBarProps[]>();
+  const sections = getSidebarProps();
   const navigate = useRouter();
-  React.useEffect(() => {
-    const fetchSections = async () => {
-      const sections = await getSidebarProps();
-      setSections(sections);
-    };
-    fetchSections();
-  }, []);
-
   const actions: Action[] =
     sections?.map((section) => ({
       id: section.slug[0],

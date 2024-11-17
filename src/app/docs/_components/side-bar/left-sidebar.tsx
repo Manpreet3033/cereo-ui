@@ -1,12 +1,12 @@
+import { getSidebarProps } from "@/lib/utils";
 import Link from "next/link";
-import { getSidebarProps } from "../../actions/actions";
 
 export default async function LeftSidebar({
   params,
 }: {
   params?: { slug: [string] };
 }) {
-  const sections = await getSidebarProps();
+  const sections = getSidebarProps();
   const slug = params && (await params).slug[0];
 
   return (

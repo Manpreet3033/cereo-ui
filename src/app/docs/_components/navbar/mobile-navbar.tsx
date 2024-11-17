@@ -7,11 +7,11 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Menu } from "lucide-react";
-import { getSidebarProps } from "../../actions/actions";
 import Link from "next/link";
+import { getSidebarProps } from "@/lib/utils";
 
 const MobileNav = async ({ params }: { params: { slug: [string] } }) => {
-  const sections = await getSidebarProps();
+  const sections = getSidebarProps();
   const slug = params && (await params).slug[0];
   return (
     <Drawer>

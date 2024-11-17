@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/provider/theme-provider";
 import KBar from "../components/kbar";
+import { getSidebarProps } from "@/lib/utils";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -20,6 +21,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const sections = getSidebarProps();
   return (
     <html
       lang="en"
@@ -28,7 +30,7 @@ export default function RootLayout({
     >
       <body suppressHydrationWarning>
         <ThemeProvider attribute="class" enableSystem>
-          <KBar>{children}</KBar>
+          <KBar sections={sections}>{children}</KBar>
         </ThemeProvider>
       </body>
     </html>
