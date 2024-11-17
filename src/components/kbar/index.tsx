@@ -8,7 +8,6 @@ import {
   KBarProvider,
   KBarSearch,
   Action,
-  Priority,
 } from "kbar";
 import RenderResult from "./render-result";
 import { getSidebarProps } from "@/app/docs/actions/actions";
