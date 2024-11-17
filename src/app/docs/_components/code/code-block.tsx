@@ -1,6 +1,6 @@
 import React from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import CopyButton from "../buttons/copy-button";
 
 interface CodeBlockProps {
@@ -14,7 +14,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
       <div className="relative">
         <SyntaxHighlighter
           language={language}
-          style={oneDark}
+          style={coldarkDark}
           customStyle={{
             width: "100%",
             padding: "16px",
