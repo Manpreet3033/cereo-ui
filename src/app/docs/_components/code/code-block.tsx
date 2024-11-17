@@ -1,8 +1,5 @@
-"use client";
 import React from "react";
-// @ts-expect-error ignore
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-// @ts-expect-error ignore
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import CopyButton from "../buttons/copy-button";
 

@@ -2,6 +2,7 @@
 import { Menubar, MenubarMenu, MenubarTrigger } from "@radix-ui/react-menubar";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+
 import React, { useEffect, useState } from "react";
 
 const ThemeSwitcher = () => {

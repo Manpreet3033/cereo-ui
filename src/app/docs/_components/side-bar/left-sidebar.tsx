@@ -14,7 +14,9 @@ export default async function LeftSidebar({
       <nav className="w-11/12 overflow-y-auto p-4">
         <div className="space-y-4">
           <div className="transition-all duration-300">
-            <p className="space-y-1 my-2 pl-4 font-bold">Components</p>
+            <p className="space-y-1 my-2 pl-4 font-bold dark:text-white text-black">
+              Components
+            </p>
             <ul className="space-y-1 pl-4">
               {sections.map((item) => {
                 const name = item.title;
