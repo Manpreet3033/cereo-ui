@@ -2,7 +2,11 @@ import Link from "next/link";
 import ThemeSwitcher from "../buttons/theme-switcher";
 import MobileNav from "./mobile-navbar";
 
-export default function Header({ params }: { params: { slug: [string] } }) {
+export default function Header({
+  params,
+}: {
+  params: Promise<{ slug: string[] }>;
+}) {
   return (
     <header className="fixed top-0 gap-2 z-40 w-full border-b dark:border-gray-800 border-gray-300 dark:bg-black/50 backdrop-blur-lg">
       <div className="mx-auto max-w-screen-2xl flex h-16 items-center justify-between px-4">

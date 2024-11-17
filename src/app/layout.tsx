@@ -21,7 +21,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const sections = getSidebarProps();
   return (
     <html
       lang="en"
@@ -30,7 +29,7 @@ export default function RootLayout({
     >
       <body suppressHydrationWarning>
         <ThemeProvider attribute="class" enableSystem>
-          <KBar sections={sections}>{children}</KBar>
+          <KBar>{children}</KBar>
         </ThemeProvider>
       </body>
     </html>

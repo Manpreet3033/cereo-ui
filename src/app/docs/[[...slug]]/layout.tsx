@@ -3,9 +3,10 @@ import LeftSidebar from "../_components/side-bar/left-sidebar";
 import RightSidebar from "../_components/side-bar/right-sidebar";
 import Header from "../_components/navbar/header";
 
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unnecessary-type-assertion */
 type Props = {
   children: React.ReactNode;
-  params: { slug: [string] };
+  params: Promise<{ slug: string[] }>;
 };
 
 const Layout = ({ children, params }: Props) => {

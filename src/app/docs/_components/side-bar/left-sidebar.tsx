@@ -4,7 +4,7 @@ import Link from "next/link";
 export default async function LeftSidebar({
   params,
 }: {
-  params?: { slug: [string] };
+  params?: Promise<{ slug: string[] }>;
 }) {
   const sections = getSidebarProps();
   const slug = params && (await params).slug[0];
