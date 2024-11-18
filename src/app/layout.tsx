@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/provider/theme-provider";
 import KBar from "../components/kbar";
-import { getSidebarProps } from "@/lib/utils";
+import { Toaster } from "sonner";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   description: "CereoUI your next stop for all Your component's need.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

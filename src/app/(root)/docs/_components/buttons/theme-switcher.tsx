@@ -27,7 +27,8 @@ const ThemeSwitcher = () => {
         <MenubarTrigger
           className="focus:bg-light-900 data-[state=open]:bg-light-900 dark:focus:bg-dark-200 dark:data-[state=open]:bg-dark-200"
           onClick={() => {
-            setTheme(theme === "light" ? "dark" : "light");
+            const savedTheme = theme === "light" ? "dark" : "light";
+            setTheme(savedTheme);
           }}
         >
           {theme === "light" ? <Sun /> : <Moon />}

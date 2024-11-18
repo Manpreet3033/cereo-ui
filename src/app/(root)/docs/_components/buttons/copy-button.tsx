@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { Check, Copy } from "lucide-react";
+import { toast } from "sonner";
 
 const CopyButton = ({ text }: { text: string }) => {
   const [copied, setCopied] = React.useState(false);
@@ -17,7 +18,7 @@ const CopyButton = ({ text }: { text: string }) => {
       className="text-gray-400 dark:hover:text-white"
     >
       {copied ? (
-        <Check className="h-4 w-4 text-green-500" />
+        <Check className="h-5 w-5 text-white" />
       ) : (
         <Copy className="h-4 w-4" />
       )}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ThemeSwitcher from "../buttons/theme-switcher";
 import MobileNav from "./mobile-navbar";
+import SearchInput from "@/components/common/search-input";
 
 export default function Header({
   params,
@@ -34,11 +35,7 @@ export default function Header({
 
         <div className="flex items-center gap-4 sm:gap-1">
           <div className="relative">
-            <input
-              type="search"
-              placeholder="Search..."
-              className="w-full rounded-lg dark:bg-gray-900 bg-gray-100 border px-2 py-2 text-sm focus:outline-none"
-            />
+            <SearchInput />
           </div>
           <div className="flex ml-2 items-center">
             <ThemeSwitcher />
