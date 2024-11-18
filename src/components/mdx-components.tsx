@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import { cn, extractText } from "@/lib/utils";
+import { ComponentPreview } from "@/app/(root)/docs/_components/preview/component-preview";
 
 const Accordion = dynamic(() =>
   import("@/components/ui/accordion").then((mod) => mod.Accordion)
@@ -295,5 +296,6 @@ export function getMDXComponents() {
         {...props}
       />
     ),
+    ComponentPreview: ComponentPreview,
   };
 }

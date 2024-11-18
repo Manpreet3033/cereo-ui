@@ -6,7 +6,7 @@ export default function RightSidebar() {
   const [activeId, setActiveId] = useState<string>("");
 
   useEffect(() => {
-    const headingElements = Array.from(document.querySelectorAll("h2, h3"));
+    const headingElements = Array.from(document.querySelectorAll("h2"));
     const headingsList = headingElements.map((heading) => ({
       id: heading.id,
       text: heading.textContent || "",

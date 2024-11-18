@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { ComponentPreview } from "./docs/_components/preview/component-preview";
 
 export default function Home() {
   return (

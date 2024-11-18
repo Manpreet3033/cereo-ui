@@ -10,7 +10,7 @@ interface CodeBlockProps {
 
 const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
   return (
-    <div className="relative rounded-lg overflow-hidden mb-4">
+    <div className="relative rounded-md overflow-hidden border dark:border-gray-800 border-gray-200">
       <div className="relative">
         <SyntaxHighlighter
           language={language}
@@ -22,6 +22,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
             lineHeight: "1.5rem",
             fontFamily: '"JetBrains Mono", monospace',
             whiteSpace: "pre-wrap",
+            margin: 0,
           }}
           showLineNumbers={false}
         >

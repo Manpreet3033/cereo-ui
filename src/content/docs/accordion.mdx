@@ -7,6 +7,60 @@ links:
   api: https://www.radix-ui.com/docs/primitives/components/accordion#api-reference
 ---
 
+## Demo
+
+<ComponentPreview name="accordion-demo" language="tsx">
+  {`import React from "react";
+  import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const data = [
+  {
+    id: "1",
+    question: "What is the capital of France?",
+    answer: "Paris",
+  },
+  {
+    id: "2",
+    question: "What is the largest planet in our solar system?",
+    answer: "Jupiter",
+  },
+  {
+    id: "3",
+    question: "Who wrote 'To Kill a Mockingbird'?",
+    answer: "Harper Lee",
+  },
+  { id: "4", question: "What is the square root of 64?", answer: "8" },
+  {
+    id: "5",
+    question: "What is the chemical symbol for water?",
+    answer: "H2O",
+  },
+];
+
+const AccordionFaqDemo = () => {
+  return (
+    <Accordion type="single" collapsible className="w-full">
+      {data.map((item) => (
+        <AccordionItem value={item.id}>
+          <AccordionTrigger>{item.question}</AccordionTrigger>
+          <AccordionContent>{item.answer}</AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  );
+};
+
+export default AccordionFaqDemo;
+
+  `}
+</ComponentPreview>
+
+
 ## Installation
 
 <Tabs defaultValue="cli">
@@ -17,7 +71,7 @@ links:
 </TabsList>
 
 <TabsContent value="cli">
-
+<br/>
 ```bash
 npx shadcn@latest add accordion
 ```
@@ -74,6 +128,8 @@ module.exports = {
 
 ## Usage
 
+<br/>
+
 ```tsx
 import {
   Accordion,
@@ -82,6 +138,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 ```
+
+<br/>
 
 ```tsx
 <Accordion type="single" collapsible>
