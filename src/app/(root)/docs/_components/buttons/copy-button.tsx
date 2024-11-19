@@ -10,7 +10,7 @@ const CopyButton = ({ text }: { text: string }) => {
     navigator.clipboard.writeText(text);
     setTimeout(() => {
       setCopied(false);
-    }, 1000);
+    }, 1500);
   };
   return (
     <button
@@ -18,7 +18,7 @@ const CopyButton = ({ text }: { text: string }) => {
       className="text-gray-400 dark:hover:text-white"
     >
       {copied ? (
-        <Check className="h-5 w-5 text-white" />
+        <Check className="h-5 w-5 text-green-500" />
       ) : (
         <Copy className="h-4 w-4" />
       )}

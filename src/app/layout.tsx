@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/provider/theme-provider";
 import KBar from "../components/kbar";
 import { Toaster } from "sonner";
+import { getTableOfContents } from "fumadocs-core/server";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

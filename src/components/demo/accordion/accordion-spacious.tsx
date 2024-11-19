@@ -31,20 +31,16 @@ const data = [
     answer:
       "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
   },
-  {
-    id: "item-5",
-    question: "What is the chemical symbol for water?",
-    answer:
-      "The chemical symbol for water is H2O. It consists of two hydrogen atoms bonded to one oxygen atom, forming a molecule of water.",
-  },
 ];
 
-const AccordionFaqDemo = () => {
+const AccordionSpaciousDemo = () => {
   return (
-    <Accordion type="single" collapsible className="w-full">
+    <Accordion type="single" collapsible className="w-full" variant="spacious">
       {data.map((item) => (
         <AccordionItem key={item.id} value={item.id}>
-          <AccordionTrigger>{item.question}</AccordionTrigger>
+          <AccordionTrigger className="font-bold">
+            {item.question}
+          </AccordionTrigger>
           <AccordionContent>{item.answer}</AccordionContent>
         </AccordionItem>
       ))}
@@ -52,4 +48,4 @@ const AccordionFaqDemo = () => {
   );
 };
 
-export default AccordionFaqDemo;
+export default AccordionSpaciousDemo;

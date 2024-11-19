@@ -1,17 +1,16 @@
 ---
 title: Accordion
 description: A vertically stacked set of interactive headings that each reveal a section of content.
-component: true
 links:
   doc: https://www.radix-ui.com/docs/primitives/components/accordion
   api: https://www.radix-ui.com/docs/primitives/components/accordion#api-reference
 ---
 
-## Demo
+## Sample Usage For FAQ's Section
 
-<ComponentPreview name="accordion-demo" language="tsx">
-  {`import React from "react";
-  import {
+<ComponentPreview name="accordion-faq-demo" language="tsx">
+{`import React from "react";
+import {
   Accordion,
   AccordionContent,
   AccordionItem,
@@ -20,34 +19,39 @@ links:
 
 const data = [
   {
-    id: "1",
+    id: "item-1",
     question: "What is the capital of France?",
-    answer: "Paris",
+    answer:
+      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
   },
   {
-    id: "2",
+    id: "item-2",
     question: "What is the largest planet in our solar system?",
-    answer: "Jupiter",
+    answer:
+      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
   },
   {
-    id: "3",
+    id: "item-3",
     question: "Who wrote 'To Kill a Mockingbird'?",
-    answer: "Harper Lee",
+    answer:
+      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
   },
-  { id: "4", question: "What is the square root of 64?", answer: "8" },
   {
-    id: "5",
-    question: "What is the chemical symbol for water?",
-    answer: "H2O",
+    id: "item-4",
+    question: "What is the square root of 64?",
+    answer:
+      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
   },
 ];
 
 const AccordionFaqDemo = () => {
   return (
-    <Accordion type="single" collapsible className="w-full">
+    <Accordion type="single" collapsible className="w-full" variant="minimal">
       {data.map((item) => (
-        <AccordionItem value={item.id}>
-          <AccordionTrigger>{item.question}</AccordionTrigger>
+        <AccordionItem key={item.id} value={item.id}>
+          <AccordionTrigger className="font-bold">
+            {item.question}
+          </AccordionTrigger>
           <AccordionContent>{item.answer}</AccordionContent>
         </AccordionItem>
       ))}
@@ -56,72 +60,154 @@ const AccordionFaqDemo = () => {
 };
 
 export default AccordionFaqDemo;
-
-  `}
+`}
 </ComponentPreview>
 
 
 ## Installation
 
 <Tabs defaultValue="cli">
-
 <TabsList>
   <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
 </TabsList>
-
 <TabsContent value="cli">
+<br/>
+
+### Install ShadCN/UI
+<br/>
+```bash
+npx shadcn@latest init
+```
 <br/>
 ```bash
 npx shadcn@latest add accordion
 ```
+<br/>
+### Replace ```@/components/ui/accordion``` with the code below: 
+<br/>
 
-</TabsContent>
+```tsx
+"use client";
 
-<TabsContent value="manual">
+import * as React from "react";
+import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import { ChevronDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-<Steps>
+const Accordion = React.forwardRef<
+  React.ElementRef<typeof AccordionPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Root> & {
+    variant?:
+      | "shadow"
+      | "bordered"
+      | "minimal"
+      | "compact"
+      | "spacious"
+      | "flat"
+      | "outline"
+      | "gradient"
+      | "clickableHeader"
+      | "interactive";
+    Icon?: React.ReactSVGElement;
+    iconAlignment?: "left" | "right";
+  }
+>(({ className, variant, Icon, iconAlignment, ...props }, ref) => {
+  const variantClasses = {
+    shadow:
+      "shadow-lg rounded-lg border bg-gray-200 dark:bg-gray-800 px-4 py-2",
+    bordered:
+      "border rounded-md px-4 py-2 dark:border-gray-800 border-gray-200",
+    minimal: "border-none",
+    compact: "px-2 text-sm border border-gray-300 rounded-md",
+    spacious: "px-6 py-4 border border-gray-300 rounded-lg",
+    flat: "bg-transparent border-none text-gray-600 dark:text-gray-400",
+    outline: "border-2 border-primary rounded-md px-4 py-2",
+    gradient:
+      "bg-gradient-to-r from-[#ad5389] to-[#3c1053] text-white  rounded-lg px-4 py-2",
+    clickableHeader: "flex items-center gap-2 justify-between cursor-pointer",
+    interactive:
+      "hover:bg-gray-100 transition ease-in duration-250 dark:hover:bg-gray-800 focus:ring focus:ring-primary px-4 py-2",
+  };
 
-<Step>Install the following dependencies:</Step>
+  return (
+    <div className="w-full">
+      {iconAlignment === "left" && Icon}
+      <AccordionPrimitive.Root
+        ref={ref}
+        className={cn(variantClasses[variant || "bordered"], className)}
+        {...props}
+      />
+      {iconAlignment === "right" && Icon}
+    </div>
+  );
+});
+Accordion.displayName = "Accordion";
 
-```bash
-npm install @radix-ui/react-accordion
+const AccordionItem = React.forwardRef<
+  React.ElementRef<typeof AccordionPrimitive.Item>,
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item> & {
+    variant?: "striped";
+  }
+>(({ className, variant, ...props }, ref) => {
+  const variantClasses = {
+    striped:
+      "even:bg-gray-100 odd:bg-white dark:even:bg-gray-800 dark:odd:bg-gray-900 px-2 rounded",
+  };
+  return (
+    <AccordionPrimitive.Item
+      ref={ref}
+      className={cn(
+        variant === "striped" && variantClasses[variant],
+        "border-b dark:border-gray-800 border-gray-200 last:border-none",
+        className
+      )}
+      {...props}
+    />
+  );
+});
+AccordionItem.displayName = "AccordionItem";
+
+const AccordionTrigger = React.forwardRef<
+  React.ElementRef<typeof AccordionPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
+>(({ className, children, ...props }, ref) => (
+  <AccordionPrimitive.Header className="flex">
+    <AccordionPrimitive.Trigger
+      ref={ref}
+      className={cn(
+        "flex flex-1 items-center justify-between py-4 text-sm font-medium transition-all text-left [&[data-state=open]>svg]:rotate-180",
+        className
+      )}
+      {...props}
+    >
+      {children}
+      <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200" />
+    </AccordionPrimitive.Trigger>
+  </AccordionPrimitive.Header>
+));
+AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName;
+
+const AccordionContent = React.forwardRef<
+  React.ElementRef<typeof AccordionPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
+>(({ className, children, ...props }, ref) => (
+  <AccordionPrimitive.Content
+    ref={ref}
+    className={cn(
+      "overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down",
+      className
+    )}
+    {...props}
+  >
+    <div className={cn("pb-4 pt-0", className)}>{children}</div>
+  </AccordionPrimitive.Content>
+));
+AccordionContent.displayName = AccordionPrimitive.Content.displayName;
+
+export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
-
-<Step>Update the import paths to match your project setup.</Step>
-
-<Step>Update `tailwind.config.js`</Step>
-
-<Step>Add the following animations to your `tailwind.config.js` file:</Step>
-
-```js title="tailwind.config.js" {5-18}
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  theme: {
-    extend: {
-      keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-      },
-    },
-  },
-};
-```
-
-</Steps>
-
+<br/>
 </TabsContent>
 
 </Tabs>
@@ -142,12 +228,719 @@ import {
 <br/>
 
 ```tsx
-<Accordion type="single" collapsible>
-  <AccordionItem value="item-1">
-    <AccordionTrigger>Is it accessible?</AccordionTrigger>
-    <AccordionContent>
-      Yes. It adheres to the WAI-ARIA design pattern.
-    </AccordionContent>
-  </AccordionItem>
+<Accordion type="single" collapsible className="w-full">
+    <AccordionItem value="item-1">
+        <AccordionTrigger>Accordion 1</AccordionTrigger>
+        <AccordionContent>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+          sed do eiusmod tempor incididunt ut labore et dolore magna 
+          aliqua.
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="item-2">
+        <AccordionTrigger>Accordion 2</AccordionTrigger>
+        <AccordionContent>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+          sed do eiusmod tempor incididunt ut labore et dolore magna 
+          aliqua.
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="item-3">
+        <AccordionTrigger>Accordion 3</AccordionTrigger>
+        <AccordionContent>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+          sed do eiusmod tempor incididunt ut labore et dolore magna 
+          aliqua.
+      </AccordionContent>
+    </AccordionItem>
 </Accordion>
 ```
+
+## Examples
+
+### Minimal Accordion
+<ComponentPreview name="accordion-faq-demo" language="tsx">
+{`import React from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const data = [
+  {
+    id: "item-1",
+    question: "What is the capital of France?",
+    answer:
+      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
+  },
+  {
+    id: "item-2",
+    question: "What is the largest planet in our solar system?",
+    answer:
+      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
+  },
+  {
+    id: "item-3",
+    question: "Who wrote 'To Kill a Mockingbird'?",
+    answer:
+      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
+  },
+  {
+    id: "item-4",
+    question: "What is the square root of 64?",
+    answer:
+      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
+  },
+];
+
+const AccordionFaqDemo = () => {
+  return (
+    <Accordion type="single" collapsible className="w-full" variant="minimal">
+      {data.map((item) => (
+        <AccordionItem key={item.id} value={item.id}>
+          <AccordionTrigger className="font-bold">
+            {item.question}
+          </AccordionTrigger>
+          <AccordionContent>{item.answer}</AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  );
+};
+
+export default AccordionFaqDemo;
+`}
+</ComponentPreview>
+
+<br/> 
+### Bordered Accordion
+<ComponentPreview name="accordion-bordered-demo">
+{`import React from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const data = [
+  {
+    id: "item-1",
+    question: "What is the capital of France?",
+    answer:
+      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
+  },
+  {
+    id: "item-2",
+    question: "What is the largest planet in our solar system?",
+    answer:
+      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
+  },
+  {
+    id: "item-3",
+    question: "Who wrote 'To Kill a Mockingbird'?",
+    answer:
+      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
+  },
+  {
+    id: "item-4",
+    question: "What is the square root of 64?",
+    answer:
+      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
+  },
+];
+
+const AccordionBorderedDemo = () => {
+  return (
+    <Accordion type="single" collapsible className="w-full" variant="bordered">
+      {data.map((item) => (
+        <AccordionItem key={item.id} value={item.id}>
+          <AccordionTrigger className="font-bold">
+            {item.question}
+          </AccordionTrigger>
+          <AccordionContent>{item.answer}</AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  );
+};
+
+export default AccordionBorderedDemo;
+`}
+</ComponentPreview>
+
+### Shadowed Accordion
+<ComponentPreview name="accordion-shadowed-demo">
+{`import React from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const data = [
+  {
+    id: "item-1",
+    question: "What is the capital of France?",
+    answer:
+      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
+  },
+  {
+    id: "item-2",
+    question: "What is the largest planet in our solar system?",
+    answer:
+      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
+  },
+  {
+    id: "item-3",
+    question: "Who wrote 'To Kill a Mockingbird'?",
+    answer:
+      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
+  },
+  {
+    id: "item-4",
+    question: "What is the square root of 64?",
+    answer:
+      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
+  },
+];
+
+const AccordionShadowedDemo = () => {
+  return (
+    <Accordion type="single" collapsible className="w-full" variant="shadow">
+      {data.map((item) => (
+        <AccordionItem key={item.id} value={item.id}>
+          <AccordionTrigger className="font-bold">
+            {item.question}
+          </AccordionTrigger>
+          <AccordionContent>{item.answer}</AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  );
+};
+
+export default AccordionShadowedDemo;
+`}
+</ComponentPreview>
+
+### Multi Expand Accordion
+<ComponentPreview name="multi-expand-accordion-demo">
+{`import React from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const data = [
+  {
+    id: "item-1",
+    question: "What is the capital of France?",
+    answer:
+      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
+  },
+  {
+    id: "item-2",
+    question: "What is the largest planet in our solar system?",
+    answer:
+      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
+  },
+  {
+    id: "item-3",
+    question: "Who wrote 'To Kill a Mockingbird'?",
+    answer:
+      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
+  },
+  {
+    id: "item-4",
+    question: "What is the square root of 64?",
+    answer:
+      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
+  },
+];
+
+const MultiExpandAccordion = () => {
+  return (
+    <Accordion type="multiple" className="w-full" variant="minimal">
+      {data.map((item) => (
+        <AccordionItem key={item.id} value={item.id}>
+          <AccordionTrigger className="font-bold">
+            {item.question}
+          </AccordionTrigger>
+          <AccordionContent>{item.answer}</AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  );
+};
+
+export default MultiExpandAccordion;
+`}
+</ComponentPreview>
+
+
+### Compact Accordion
+
+<ComponentPreview name="compact-accordion-demo">
+{`import React from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const data = [
+  {
+    id: "item-1",
+    question: "What is the capital of France?",
+    answer:
+      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
+  },
+  {
+    id: "item-2",
+    question: "What is the largest planet in our solar system?",
+    answer:
+      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
+  },
+  {
+    id: "item-3",
+    question: "Who wrote 'To Kill a Mockingbird'?",
+    answer:
+      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
+  },
+  {
+    id: "item-4",
+    question: "What is the square root of 64?",
+    answer:
+      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
+  },
+];
+
+const AccordionCompactDemo = () => {
+  return (
+    <Accordion type="single" collapsible className="w-full" variant="compact">
+      {data.map((item) => (
+        <AccordionItem key={item.id} value={item.id}>
+          <AccordionTrigger className="font-bold">
+            {item.question}
+          </AccordionTrigger>
+          <AccordionContent>{item.answer}</AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  );
+};
+
+export default AccordionCompactDemo;
+`}
+</ComponentPreview>
+
+### Spacious Accordion
+<ComponentPreview name="spacious-accordion-demo">
+{`import React from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const data = [
+  {
+    id: "item-1",
+    question: "What is the capital of France?",
+    answer:
+      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
+  },
+  {
+    id: "item-2",
+    question: "What is the largest planet in our solar system?",
+    answer:
+      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
+  },
+  {
+    id: "item-3",
+    question: "Who wrote 'To Kill a Mockingbird'?",
+    answer:
+      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
+  },
+  {
+    id: "item-4",
+    question: "What is the square root of 64?",
+    answer:
+      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
+  },
+];
+
+const AccordionSpaciousDemo = () => {
+  return (
+    <Accordion type="single" collapsible className="w-full" variant="spacious">
+      {data.map((item) => (
+        <AccordionItem key={item.id} value={item.id}>
+          <AccordionTrigger className="font-bold">
+            {item.question}
+          </AccordionTrigger>
+          <AccordionContent>{item.answer}</AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  );
+};
+
+export default AccordionSpaciousDemo;
+`}
+</ComponentPreview>
+
+
+### Flat Accordion
+<ComponentPreview name="flat-accordion-demo">
+{`import React from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const data = [
+  {
+    id: "item-1",
+    question: "What is the capital of France?",
+    answer:
+      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
+  },
+  {
+    id: "item-2",
+    question: "What is the largest planet in our solar system?",
+    answer:
+      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
+  },
+  {
+    id: "item-3",
+    question: "Who wrote 'To Kill a Mockingbird'?",
+    answer:
+      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
+  },
+  {
+    id: "item-4",
+    question: "What is the square root of 64?",
+    answer:
+      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
+  },
+];
+
+const AccordionFlatDemo = () => {
+  return (
+    <Accordion type="single" collapsible className="w-full" variant="flat">
+      {data.map((item) => (
+        <AccordionItem key={item.id} value={item.id}>
+          <AccordionTrigger className="font-bold">
+            {item.question}
+          </AccordionTrigger>
+          <AccordionContent>{item.answer}</AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  );
+};
+
+export default AccordionFlatDemo;
+`}
+</ComponentPreview>
+
+### Outlined Accordion
+<ComponentPreview name="outlined-accordion-demo">
+{`import React from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const data = [
+  {
+    id: "item-1",
+    question: "What is the capital of France?",
+    answer:
+      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
+  },
+  {
+    id: "item-2",
+    question: "What is the largest planet in our solar system?",
+    answer:
+      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
+  },
+  {
+    id: "item-3",
+    question: "Who wrote 'To Kill a Mockingbird'?",
+    answer:
+      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
+  },
+  {
+    id: "item-4",
+    question: "What is the square root of 64?",
+    answer:
+      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
+  },
+];
+
+const AccordionOutlineDemo = () => {
+  return (
+    <Accordion type="single" collapsible className="w-full" variant="outline">
+      {data.map((item) => (
+        <AccordionItem key={item.id} value={item.id}>
+          <AccordionTrigger className="font-bold">
+            {item.question}
+          </AccordionTrigger>
+          <AccordionContent>{item.answer}</AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  );
+};
+
+export default AccordionOutlineDemo;
+`}
+</ComponentPreview>
+
+### Gradient Accordion
+<ComponentPreview name="gradient-accordion-demo">
+{`import React from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const data = [
+  {
+    id: "item-1",
+    question: "What is the capital of France?",
+    answer:
+      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
+  },
+  {
+    id: "item-2",
+    question: "What is the largest planet in our solar system?",
+    answer:
+      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
+  },
+  {
+    id: "item-3",
+    question: "Who wrote 'To Kill a Mockingbird'?",
+    answer:
+      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
+  },
+  {
+    id: "item-4",
+    question: "What is the square root of 64?",
+    answer:
+      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
+  },
+];
+
+const AccordionGradientDemo = () => {
+  return (
+    <Accordion type="single" collapsible className="w-full" variant="gradient">
+      {data.map((item) => (
+        <AccordionItem key={item.id} value={item.id}>
+          <AccordionTrigger className="font-bold">
+            {item.question}
+          </AccordionTrigger>
+          <AccordionContent>{item.answer}</AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  );
+};
+
+export default AccordionGradientDemo;
+`}
+</ComponentPreview>
+
+### Clickable Header Accordion
+<ComponentPreview name="accordion-clickable-header">
+{`import React from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const data = [
+  {
+    id: "item-1",
+    question: "What is the capital of France?",
+    answer:
+      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
+  },
+  {
+    id: "item-2",
+    question: "What is the largest planet in our solar system?",
+    answer:
+      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
+  },
+  {
+    id: "item-3",
+    question: "Who wrote 'To Kill a Mockingbird'?",
+    answer:
+      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
+  },
+  {
+    id: "item-4",
+    question: "What is the square root of 64?",
+    answer:
+      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
+  },
+];
+
+const AccordionClickableHeaderDemo = () => {
+  return (
+    <Accordion
+      type="single"
+      collapsible
+      className="w-full"
+      variant="clickableHeader"
+    >
+      {data.map((item) => (
+        <AccordionItem key={item.id} value={item.id}>
+          <AccordionTrigger className="font-bold">
+            {item.question}
+          </AccordionTrigger>
+          <AccordionContent>{item.answer}</AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  );
+};
+
+export default AccordionClickableHeaderDemo;
+`}
+</ComponentPreview>
+
+### Interactive Accordion (Hover to See)
+
+<ComponentPreview name="interactive-accordion-demo">
+{`import React from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const data = [
+  {
+    id: "item-1",
+    question: "What is the capital of France?",
+    answer:
+      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
+  },
+  {
+    id: "item-2",
+    question: "What is the largest planet in our solar system?",
+    answer:
+      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
+  },
+  {
+    id: "item-3",
+    question: "Who wrote 'To Kill a Mockingbird'?",
+    answer:
+      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
+  },
+  {
+    id: "item-4",
+    question: "What is the square root of 64?",
+    answer:
+      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
+  },
+];
+
+const AccordionInteractiveDemo = () => {
+  return (
+    <Accordion
+      type="single"
+      collapsible
+      className="w-full"
+      variant="interactive"
+    >
+      {data.map((item) => (
+        <AccordionItem key={item.id} value={item.id}>
+          <AccordionTrigger className="font-bold">
+            {item.question}
+          </AccordionTrigger>
+          <AccordionContent>{item.answer}</AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  );
+};
+
+export default AccordionInteractiveDemo;
+`}
+</ComponentPreview>
+
+### Striped Accordion
+<ComponentPreview name="accordion-striped-demo">
+{`import React from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const data = [
+  {
+    id: "item-1",
+    question: "What is the capital of France?",
+    answer:
+      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
+  },
+  {
+    id: "item-2",
+    question: "What is the largest planet in our solar system?",
+    answer:
+      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
+  },
+  {
+    id: "item-3",
+    question: "Who wrote 'To Kill a Mockingbird'?",
+    answer:
+      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
+  },
+  {
+    id: "item-4",
+    question: "What is the square root of 64?",
+    answer:
+      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
+  },
+];
+
+const AccordionStripedDemo = () => {
+  return (
+    <Accordion type="single" collapsible className="w-full">
+      {data.map((item) => (
+        <AccordionItem key={item.id} value={item.id} variant="striped">
+          <AccordionTrigger className="font-bold">
+            {item.question}
+          </AccordionTrigger>
+          <AccordionContent>{item.answer}</AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  );
+};
+
+export default AccordionStripedDemo;
+`}
+</ComponentPreview>

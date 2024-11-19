@@ -1,7 +1,6 @@
 import { source } from "@/lib/source";
 import { DocsDescription, DocsTitle } from "fumadocs-ui/page";
 import { notFound } from "next/navigation";
-import dynamic from "next/dynamic";
 import React from "react";
 import { getMDXComponents } from "@/components/mdx-components";
 import { MDXComponents } from "mdx/types";

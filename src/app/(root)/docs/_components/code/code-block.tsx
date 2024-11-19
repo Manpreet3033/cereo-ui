@@ -22,6 +22,8 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
             lineHeight: "1.5rem",
             fontFamily: '"JetBrains Mono", monospace',
             whiteSpace: "pre-wrap",
+            height: "100%",
+            maxHeight: "350px",
             margin: 0,
           }}
           showLineNumbers={false}
