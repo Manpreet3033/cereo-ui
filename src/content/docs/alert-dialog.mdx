@@ -6,211 +6,98 @@ links:
   api: https://www.radix-ui.com/docs/primitives/components/alert-dialog#api-reference
 ---
 
-## Sample Usage For FAQ's Section
-
-<ComponentPreview name="accordion-faq-demo" language="tsx">
+<ComponentPreview name="alert-dialog-demo" language="tsx">
 {`import React from "react";
+import { Button } from "@/components/ui/button";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import { Input } from "@/components/ui/input";
 
-const data = [
-  {
-    id: "item-1",
-    question: "What is the capital of France?",
-    answer:
-      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
-  },
-  {
-    id: "item-2",
-    question: "What is the largest planet in our solar system?",
-    answer:
-      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
-  },
-  {
-    id: "item-3",
-    question: "Who wrote 'To Kill a Mockingbird'?",
-    answer:
-      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
-  },
-  {
-    id: "item-4",
-    question: "What is the square root of 64?",
-    answer:
-      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
-  },
-];
+interface ImageUploadDialogType {
+  onUpload: (file: File) => void;
+}
 
-const AccordionFaqDemo = () => {
+const AlertDialogDemo = ({ onUpload }: ImageUploadDialogType) => {
+  const [file, setFile] = React.useState<File | null>(null);
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const handleUpload = () => {
+    if (file) {
+      onUpload(file);
+      setIsOpen(false);
+      setFile(null);
+    }
+  };
+
   return (
-    <Accordion type="single" collapsible className="w-full" variant="minimal">
-      {data.map((item) => (
-        <AccordionItem key={item.id} value={item.id}>
-          <AccordionTrigger className="font-bold">
-            {item.question}
-          </AccordionTrigger>
-          <AccordionContent>{item.answer}</AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogTrigger
+        asChild
+        className="dark:bg-black dark:border-gray-900"
+      >
+        <Button variant="outline">Upload Image</Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent className="dark:bg-black dark:border-gray-900">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Upload an Image</AlertDialogTitle>
+          <AlertDialogDescription>
+            Choose an image file to upload. Supported formats: JPG, PNG, GIF.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <Input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setFile(e.target.files?.[0] || null)}
+          className="dark: border-gray-900 dark:bg-black"
+        />
+        <AlertDialogFooter>
+          <AlertDialogCancel
+            onClick={() => setIsOpen(false)}
+            className="dark:hover:bg-gray-900 dark:border-gray-800"
+          >
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction onClick={handleUpload} disabled={!file}>
+            Upload
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 };
 
-export default AccordionFaqDemo;
+export default AlertDialogDemo;
 `}
 </ComponentPreview>
 
 
-## Installation
-
-<Tabs defaultValue="cli">
-<TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-</TabsList>
-<TabsContent value="cli">
-<br/>
 
 ### Install ShadCN/UI
 <br/>
 ```bash
 npx shadcn@latest init
 ```
-<br/>
-```bash
-npx shadcn@latest add accordion
-```
-<br/>
-### Replace ```@/components/ui/accordion``` with the code below: 
-<br/>
 
-```tsx
-"use client";
-
-import * as React from "react";
-import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import { ChevronDown } from "lucide-react";
-import { cn } from "@/lib/utils";
-
-const Accordion = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Root> & {
-    variant?:
-      | "shadow"
-      | "bordered"
-      | "minimal"
-      | "compact"
-      | "spacious"
-      | "flat"
-      | "outline"
-      | "gradient"
-      | "clickableHeader"
-      | "interactive";
-    Icon?: React.ReactSVGElement;
-    iconAlignment?: "left" | "right";
-  }
->(({ className, variant, Icon, iconAlignment, ...props }, ref) => {
-  const variantClasses = {
-    shadow:
-      "shadow-lg rounded-lg border bg-gray-200 dark:bg-gray-800 px-4 py-2",
-    bordered:
-      "border rounded-md px-4 py-2 dark:border-gray-800 border-gray-200",
-    minimal: "border-none",
-    compact: "px-2 text-sm border border-gray-300 rounded-md",
-    spacious: "px-6 py-4 border border-gray-300 rounded-lg",
-    flat: "bg-transparent border-none text-gray-600 dark:text-gray-400",
-    outline: "border-2 border-primary rounded-md px-4 py-2",
-    gradient:
-      "bg-gradient-to-r from-[#ad5389] to-[#3c1053] text-white  rounded-lg px-4 py-2",
-    clickableHeader: "flex items-center gap-2 justify-between cursor-pointer",
-    interactive:
-      "hover:bg-gray-100 transition ease-in duration-250 dark:hover:bg-gray-800 focus:ring focus:ring-primary px-4 py-2",
-  };
-
-  return (
-    <div className="w-full">
-      {iconAlignment === "left" && Icon}
-      <AccordionPrimitive.Root
-        ref={ref}
-        className={cn(variantClasses[variant || "bordered"], className)}
-        {...props}
-      />
-      {iconAlignment === "right" && Icon}
-    </div>
-  );
-});
-Accordion.displayName = "Accordion";
-
-const AccordionItem = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item> & {
-    variant?: "striped";
-  }
->(({ className, variant, ...props }, ref) => {
-  const variantClasses = {
-    striped:
-      "even:bg-gray-100 odd:bg-white dark:even:bg-gray-800 dark:odd:bg-gray-900 px-2 rounded",
-  };
-  return (
-    <AccordionPrimitive.Item
-      ref={ref}
-      className={cn(
-        variant === "striped" && variantClasses[variant],
-        "border-b dark:border-gray-800 border-gray-200 last:border-none",
-        className
-      )}
-      {...props}
-    />
-  );
-});
-AccordionItem.displayName = "AccordionItem";
-
-const AccordionTrigger = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Header className="flex">
-    <AccordionPrimitive.Trigger
-      ref={ref}
-      className={cn(
-        "flex flex-1 items-center justify-between py-4 text-sm font-medium transition-all text-left [&[data-state=open]>svg]:rotate-180",
-        className
-      )}
-      {...props}
-    >
-      {children}
-      <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200" />
-    </AccordionPrimitive.Trigger>
-  </AccordionPrimitive.Header>
-));
-AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName;
-
-const AccordionContent = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Content
-    ref={ref}
-    className={cn(
-      "overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down",
-      className
-    )}
-    {...props}
-  >
-    <div className={cn("pb-4 pt-0", className)}>{children}</div>
-  </AccordionPrimitive.Content>
-));
-AccordionContent.displayName = AccordionPrimitive.Content.displayName;
-
-export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };
-```
+### Install All ShadCN/UI Components
+<Steps>
+<Step>
+<span>```npx shadcn@latest add```</span>
+</Step>
+<Step>
+Press <span>`A`</span> to Select All Components and Press <span>`Enter or Return`</span>
+</Step>
+</Steps>
 
 <br/>
-</TabsContent>
-
-</Tabs>
 
 ## Usage
 
@@ -218,729 +105,601 @@ export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };
 
 ```tsx
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 ```
 
 <br/>
 
 ```tsx
-<Accordion type="single" collapsible className="w-full">
-    <AccordionItem value="item-1">
-        <AccordionTrigger>Accordion 1</AccordionTrigger>
-        <AccordionContent>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-          sed do eiusmod tempor incididunt ut labore et dolore magna 
-          aliqua.
-        </AccordionContent>
-      </AccordionItem>
-      <AccordionItem value="item-2">
-        <AccordionTrigger>Accordion 2</AccordionTrigger>
-        <AccordionContent>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-          sed do eiusmod tempor incididunt ut labore et dolore magna 
-          aliqua.
-        </AccordionContent>
-      </AccordionItem>
-      <AccordionItem value="item-3">
-        <AccordionTrigger>Accordion 3</AccordionTrigger>
-        <AccordionContent>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-          sed do eiusmod tempor incididunt ut labore et dolore magna 
-          aliqua.
-      </AccordionContent>
-    </AccordionItem>
-</Accordion>
+<AlertDialog>
+  <AlertDialogTrigger>Open</AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+      <AlertDialogDescription>
+        This action cannot be undone. This will permanently delete your account
+        and remove your data from our servers.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction>Continue</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
 ```
 
 ## Examples
 
-### Minimal Accordion
-<ComponentPreview name="accordion-faq-demo" language="tsx">
+### Confirmation Dialog
+
+<ComponentPreview name="alert-confirmation-demo">
 {`import React from "react";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 
-const data = [
-  {
-    id: "item-1",
-    question: "What is the capital of France?",
-    answer:
-      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
-  },
-  {
-    id: "item-2",
-    question: "What is the largest planet in our solar system?",
-    answer:
-      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
-  },
-  {
-    id: "item-3",
-    question: "Who wrote 'To Kill a Mockingbird'?",
-    answer:
-      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
-  },
-  {
-    id: "item-4",
-    question: "What is the square root of 64?",
-    answer:
-      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
-  },
-];
+interface ConfirmationDialogType {
+  onConfirm: () => void;
+  onCancel: () => void;
+}
 
-const AccordionFaqDemo = () => {
+const AlertConfirmationDialog = ({
+  onConfirm,
+  onCancel,
+}: ConfirmationDialogType) => {
   return (
-    <Accordion type="single" collapsible className="w-full" variant="minimal">
-      {data.map((item) => (
-        <AccordionItem key={item.id} value={item.id}>
-          <AccordionTrigger className="font-bold">
-            {item.question}
-          </AccordionTrigger>
-          <AccordionContent>{item.answer}</AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="dark:border-gray-800 dark:hover:bg-gray-900"
+        >
+          Delete Item
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent className="dark:border-gray-800 dark:bg-black">
+        <AlertDialogHeader className="">
+          <AlertDialogTitle>Are you sure you want to delete?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone. This will permanently delete the item
+            from our servers.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel
+            onClick={onCancel}
+            className="dark:border-gray-800 dark:hover:bg-gray-900"
+          >
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction onClick={onConfirm}>Delete</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 };
 
-export default AccordionFaqDemo;
+export default AlertConfirmationDialog;
 `}
 </ComponentPreview>
 
-<br/> 
-### Bordered Accordion
-<ComponentPreview name="accordion-bordered-demo">
-{`import React from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+### Error Dialog
+<ComponentPreview name="alert-error-demo">
+{`import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 
-const data = [
-  {
-    id: "item-1",
-    question: "What is the capital of France?",
-    answer:
-      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
-  },
-  {
-    id: "item-2",
-    question: "What is the largest planet in our solar system?",
-    answer:
-      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
-  },
-  {
-    id: "item-3",
-    question: "Who wrote 'To Kill a Mockingbird'?",
-    answer:
-      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
-  },
-  {
-    id: "item-4",
-    question: "What is the square root of 64?",
-    answer:
-      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
-  },
-];
+interface ErrorDialogType {
+  message: string;
+  onRetry: () => void;
+}
 
-const AccordionBorderedDemo = () => {
-  return (
-    <Accordion type="single" collapsible className="w-full" variant="bordered">
-      {data.map((item) => (
-        <AccordionItem key={item.id} value={item.id}>
-          <AccordionTrigger className="font-bold">
-            {item.question}
-          </AccordionTrigger>
-          <AccordionContent>{item.answer}</AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
-  );
-};
+const ErrorDialog = ({ message, onRetry }: ErrorDialogType) => (
+  <AlertDialog>
+    <AlertDialogTrigger asChild>
+      <Button
+        variant="outline"
+        className="dark:border-gray-800 dark:hover:bg-gray-900"
+      >
+        Show Error
+      </Button>
+    </AlertDialogTrigger>
+    <AlertDialogContent className="dark:border-gray-800 dark:bg-black">
+      <AlertDialogHeader>
+        <AlertDialogTitle>Error Occurred</AlertDialogTitle>
+        <AlertDialogDescription>{message}</AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogCancel className="dark:border-gray-800 dark:hover:bg-gray-900">
+          Close
+        </AlertDialogCancel>
+        <AlertDialogAction onClick={onRetry}>Retry</AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
+);
 
-export default AccordionBorderedDemo;
+export default ErrorDialog;
 `}
 </ComponentPreview>
 
-### Shadowed Accordion
-<ComponentPreview name="accordion-shadowed-demo">
-{`import React from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+### Form Dialog
+<ComponentPreview name="alert-form-demo">
+{`import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import React from "react";
 
-const data = [
-  {
-    id: "item-1",
-    question: "What is the capital of France?",
-    answer:
-      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
-  },
-  {
-    id: "item-2",
-    question: "What is the largest planet in our solar system?",
-    answer:
-      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
-  },
-  {
-    id: "item-3",
-    question: "Who wrote 'To Kill a Mockingbird'?",
-    answer:
-      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
-  },
-  {
-    id: "item-4",
-    question: "What is the square root of 64?",
-    answer:
-      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
-  },
-];
+interface FormDialogType {
+  onSubmit: (name: string, email: string) => void;
+}
 
-const AccordionShadowedDemo = () => {
+const FormDialog = ({ onSubmit }: FormDialogType) => {
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
   return (
-    <Accordion type="single" collapsible className="w-full" variant="shadow">
-      {data.map((item) => (
-        <AccordionItem key={item.id} value={item.id}>
-          <AccordionTrigger className="font-bold">
-            {item.question}
-          </AccordionTrigger>
-          <AccordionContent>{item.answer}</AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="dark:border-gray-800 dark:hover:bg-gray-900"
+        >
+          Open Form
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent className="dark:border-gray-800 dark:bg-black">
+        <AlertDialogHeader>
+          <AlertDialogTitle>User Information</AlertDialogTitle>
+          <AlertDialogDescription>
+            Please fill out the form below.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Name
+            </Label>
+            <Input
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="col-span-3 dark:border-gray-800 dark:bg-black"
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="email" className="text-right">
+              Email
+            </Label>
+            <Input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="col-span-3 dark:border-gray-800 dark:bg-black"
+            />
+          </div>
+        </div>
+        <AlertDialogFooter>
+          <AlertDialogCancel className="dark:border-gray-800 dark:hover:bg-gray-900">
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction onClick={() => onSubmit(name, email)}>
+            Submit
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 };
 
-export default AccordionShadowedDemo;
-`}
-</ComponentPreview>
-
-### Multi Expand Accordion
-<ComponentPreview name="multi-expand-accordion-demo">
-{`import React from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-
-const data = [
-  {
-    id: "item-1",
-    question: "What is the capital of France?",
-    answer:
-      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
-  },
-  {
-    id: "item-2",
-    question: "What is the largest planet in our solar system?",
-    answer:
-      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
-  },
-  {
-    id: "item-3",
-    question: "Who wrote 'To Kill a Mockingbird'?",
-    answer:
-      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
-  },
-  {
-    id: "item-4",
-    question: "What is the square root of 64?",
-    answer:
-      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
-  },
-];
-
-const MultiExpandAccordion = () => {
-  return (
-    <Accordion type="multiple" className="w-full" variant="minimal">
-      {data.map((item) => (
-        <AccordionItem key={item.id} value={item.id}>
-          <AccordionTrigger className="font-bold">
-            {item.question}
-          </AccordionTrigger>
-          <AccordionContent>{item.answer}</AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
-  );
-};
-
-export default MultiExpandAccordion;
+export default FormDialog;
 `}
 </ComponentPreview>
 
 
-### Compact Accordion
+### Help Dialog
 
-<ComponentPreview name="compact-accordion-demo">
-{`import React from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+<ComponentPreview name="alert-help-demo">
+{`import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 
-const data = [
-  {
-    id: "item-1",
-    question: "What is the capital of France?",
-    answer:
-      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
-  },
-  {
-    id: "item-2",
-    question: "What is the largest planet in our solar system?",
-    answer:
-      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
-  },
-  {
-    id: "item-3",
-    question: "Who wrote 'To Kill a Mockingbird'?",
-    answer:
-      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
-  },
-  {
-    id: "item-4",
-    question: "What is the square root of 64?",
-    answer:
-      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
-  },
-];
+interface HelpDialogType {
+  content: string;
+}
 
-const AccordionCompactDemo = () => {
-  return (
-    <Accordion type="single" collapsible className="w-full" variant="compact">
-      {data.map((item) => (
-        <AccordionItem key={item.id} value={item.id}>
-          <AccordionTrigger className="font-bold">
-            {item.question}
-          </AccordionTrigger>
-          <AccordionContent>{item.answer}</AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
-  );
-};
-
-export default AccordionCompactDemo;
-`}
-</ComponentPreview>
-
-### Spacious Accordion
-<ComponentPreview name="spacious-accordion-demo">
-{`import React from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-
-const data = [
-  {
-    id: "item-1",
-    question: "What is the capital of France?",
-    answer:
-      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
-  },
-  {
-    id: "item-2",
-    question: "What is the largest planet in our solar system?",
-    answer:
-      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
-  },
-  {
-    id: "item-3",
-    question: "Who wrote 'To Kill a Mockingbird'?",
-    answer:
-      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
-  },
-  {
-    id: "item-4",
-    question: "What is the square root of 64?",
-    answer:
-      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
-  },
-];
-
-const AccordionSpaciousDemo = () => {
-  return (
-    <Accordion type="single" collapsible className="w-full" variant="spacious">
-      {data.map((item) => (
-        <AccordionItem key={item.id} value={item.id}>
-          <AccordionTrigger className="font-bold">
-            {item.question}
-          </AccordionTrigger>
-          <AccordionContent>{item.answer}</AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
-  );
-};
-
-export default AccordionSpaciousDemo;
-`}
-</ComponentPreview>
-
-
-### Flat Accordion
-<ComponentPreview name="flat-accordion-demo">
-{`import React from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-
-const data = [
-  {
-    id: "item-1",
-    question: "What is the capital of France?",
-    answer:
-      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
-  },
-  {
-    id: "item-2",
-    question: "What is the largest planet in our solar system?",
-    answer:
-      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
-  },
-  {
-    id: "item-3",
-    question: "Who wrote 'To Kill a Mockingbird'?",
-    answer:
-      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
-  },
-  {
-    id: "item-4",
-    question: "What is the square root of 64?",
-    answer:
-      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
-  },
-];
-
-const AccordionFlatDemo = () => {
-  return (
-    <Accordion type="single" collapsible className="w-full" variant="flat">
-      {data.map((item) => (
-        <AccordionItem key={item.id} value={item.id}>
-          <AccordionTrigger className="font-bold">
-            {item.question}
-          </AccordionTrigger>
-          <AccordionContent>{item.answer}</AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
-  );
-};
-
-export default AccordionFlatDemo;
-`}
-</ComponentPreview>
-
-### Outlined Accordion
-<ComponentPreview name="outlined-accordion-demo">
-{`import React from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-
-const data = [
-  {
-    id: "item-1",
-    question: "What is the capital of France?",
-    answer:
-      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
-  },
-  {
-    id: "item-2",
-    question: "What is the largest planet in our solar system?",
-    answer:
-      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
-  },
-  {
-    id: "item-3",
-    question: "Who wrote 'To Kill a Mockingbird'?",
-    answer:
-      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
-  },
-  {
-    id: "item-4",
-    question: "What is the square root of 64?",
-    answer:
-      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
-  },
-];
-
-const AccordionOutlineDemo = () => {
-  return (
-    <Accordion type="single" collapsible className="w-full" variant="outline">
-      {data.map((item) => (
-        <AccordionItem key={item.id} value={item.id}>
-          <AccordionTrigger className="font-bold">
-            {item.question}
-          </AccordionTrigger>
-          <AccordionContent>{item.answer}</AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
-  );
-};
-
-export default AccordionOutlineDemo;
-`}
-</ComponentPreview>
-
-### Gradient Accordion
-<ComponentPreview name="gradient-accordion-demo">
-{`import React from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-
-const data = [
-  {
-    id: "item-1",
-    question: "What is the capital of France?",
-    answer:
-      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
-  },
-  {
-    id: "item-2",
-    question: "What is the largest planet in our solar system?",
-    answer:
-      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
-  },
-  {
-    id: "item-3",
-    question: "Who wrote 'To Kill a Mockingbird'?",
-    answer:
-      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
-  },
-  {
-    id: "item-4",
-    question: "What is the square root of 64?",
-    answer:
-      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
-  },
-];
-
-const AccordionGradientDemo = () => {
-  return (
-    <Accordion type="single" collapsible className="w-full" variant="gradient">
-      {data.map((item) => (
-        <AccordionItem key={item.id} value={item.id}>
-          <AccordionTrigger className="font-bold">
-            {item.question}
-          </AccordionTrigger>
-          <AccordionContent>{item.answer}</AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
-  );
-};
-
-export default AccordionGradientDemo;
-`}
-</ComponentPreview>
-
-### Clickable Header Accordion
-<ComponentPreview name="accordion-clickable-header">
-{`import React from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-
-const data = [
-  {
-    id: "item-1",
-    question: "What is the capital of France?",
-    answer:
-      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
-  },
-  {
-    id: "item-2",
-    question: "What is the largest planet in our solar system?",
-    answer:
-      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
-  },
-  {
-    id: "item-3",
-    question: "Who wrote 'To Kill a Mockingbird'?",
-    answer:
-      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
-  },
-  {
-    id: "item-4",
-    question: "What is the square root of 64?",
-    answer:
-      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
-  },
-];
-
-const AccordionClickableHeaderDemo = () => {
-  return (
-    <Accordion
-      type="single"
-      collapsible
-      className="w-full"
-      variant="clickableHeader"
+const HelpDialog = ({ content }: HelpDialogType) => (
+  <AlertDialog>
+    <AlertDialogTrigger
+      asChild
+      className="dark:border-gray-800 dark:hover:bg-gray-900"
     >
-      {data.map((item) => (
-        <AccordionItem key={item.id} value={item.id}>
-          <AccordionTrigger className="font-bold">
-            {item.question}
-          </AccordionTrigger>
-          <AccordionContent>{item.answer}</AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
-  );
-};
+      <Button variant="outline">Get Help</Button>
+    </AlertDialogTrigger>
+    <AlertDialogContent className="dark:bg-black dark:border-gray-800">
+      <AlertDialogHeader>
+        <AlertDialogTitle>Help & Support</AlertDialogTitle>
+      </AlertDialogHeader>
+      <div className="max-h-[60vh] overflow-y-auto">
+        <AlertDialogDescription>{content}</AlertDialogDescription>
+      </div>
+      <AlertDialogFooter>
+        <AlertDialogAction>Close</AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
+);
 
-export default AccordionClickableHeaderDemo;
+export default HelpDialog;
 `}
 </ComponentPreview>
 
-### Interactive Accordion (Hover to See)
+### Information Dialog
+<ComponentPreview name="alert-information-demo">
+{`import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 
-<ComponentPreview name="interactive-accordion-demo">
-{`import React from "react";
+interface InformationDialogType {
+  title: string;
+  description: string;
+}
+
+const InformationDialog = ({ title, description }: InformationDialogType) => (
+  <AlertDialog>
+    <AlertDialogTrigger asChild>
+      <Button
+        variant="outline"
+        className="dark:border-gray-800 dark:hover:bg-gray-900"
+      >
+        Show Info
+      </Button>
+    </AlertDialogTrigger>
+    <AlertDialogContent className="dark:bg-black dark:border-gray-800">
+      <AlertDialogHeader>
+        <AlertDialogTitle>{title ?? "Title"}</AlertDialogTitle>
+        <AlertDialogDescription>
+          {description ?? "Description"}
+        </AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogAction>OK</AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
+);
+
+export default InformationDialog;
+`}
+</ComponentPreview>
+
+### Input Dialog
+<ComponentPreview name="alert-input-demo">
+{`import { Button } from "@/components/ui/button";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import { Input } from "@/components/ui/input";
+import React from "react";
 
-const data = [
-  {
-    id: "item-1",
-    question: "What is the capital of France?",
-    answer:
-      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
-  },
-  {
-    id: "item-2",
-    question: "What is the largest planet in our solar system?",
-    answer:
-      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
-  },
-  {
-    id: "item-3",
-    question: "Who wrote 'To Kill a Mockingbird'?",
-    answer:
-      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
-  },
-  {
-    id: "item-4",
-    question: "What is the square root of 64?",
-    answer:
-      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
-  },
-];
+interface InputDialogType {
+  onSubmit: (input: string) => void;
+}
 
-const AccordionInteractiveDemo = () => {
+const InputDialog = ({ onSubmit }: InputDialogType) => {
+  const [input, setInput] = React.useState("");
   return (
-    <Accordion
-      type="single"
-      collapsible
-      className="w-full"
-      variant="interactive"
+    <AlertDialog>
+      <AlertDialogTrigger
+        asChild
+        className="dark:border-gray-800 dark:hover:bg-gray-900"
+      >
+        <Button variant="outline">Open Input Dialog</Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent className="dark:bg-black dark:border-gray-800">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Enter Information</AlertDialogTitle>
+          <AlertDialogDescription>
+            Please provide the required information below.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <Input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Enter your text here"
+          className="dark:bg-black dark:border-gray-800"
+        />
+        <AlertDialogFooter>
+          <AlertDialogCancel className="dark:border-gray-800 dark:hover:bg-gray-900">
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction onClick={() => onSubmit(input)}>
+            Submit
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+
+export default InputDialog;
+`}
+</ComponentPreview>
+
+### Progress Alert
+<ComponentPreview name="alert-progress-demo">
+{`import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+
+interface ProgressDialogType {
+  progress: number;
+}
+const ProgressDialog = ({ progress }: ProgressDialogType) => (
+  <AlertDialog>
+    <AlertDialogTrigger
+      asChild
+      className="dark:border-gray-800 dark:hover:bg-gray-900"
     >
-      {data.map((item) => (
-        <AccordionItem key={item.id} value={item.id}>
-          <AccordionTrigger className="font-bold">
-            {item.question}
-          </AccordionTrigger>
-          <AccordionContent>{item.answer}</AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
-  );
-};
+      <Button variant="outline">Show Progress</Button>
+    </AlertDialogTrigger>
+    <AlertDialogContent className="dark:bg-black dark:border-gray-800">
+      <AlertDialogHeader>
+        <AlertDialogTitle>Operation in Progress</AlertDialogTitle>
+        <AlertDialogDescription>
+          Please wait while we process your request.
+        </AlertDialogDescription>
+      </AlertDialogHeader>
+      <Progress value={progress ?? 65} className="w-full dark:bg-gray-700" />
+      <AlertDialogFooter>
+        <AlertDialogCancel className="dark:border-gray-800 dark:hover:bg-gray-900">
+          Cancel
+        </AlertDialogCancel>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
+);
 
-export default AccordionInteractiveDemo;
+export default ProgressDialog;
 `}
 </ComponentPreview>
 
-### Striped Accordion
-<ComponentPreview name="accordion-striped-demo">
-{`import React from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+### Selection Dialog
+<ComponentPreview name="alert-selection-demo">
+{`import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
-const data = [
-  {
-    id: "item-1",
-    question: "What is the capital of France?",
-    answer:
-      "The capital of France is Paris. It is known for its art, fashion, and iconic landmarks such as the Eiffel Tower and the Louvre Museum.",
-  },
-  {
-    id: "item-2",
-    question: "What is the largest planet in our solar system?",
-    answer:
-      "Jupiter is the largest planet in our solar system. It is a gas giant and is known for its Great Red Spot and many moons.",
-  },
-  {
-    id: "item-3",
-    question: "Who wrote 'To Kill a Mockingbird'?",
-    answer:
-      "Harper Lee wrote 'To Kill a Mockingbird,' which was published in 1960. The novel is a classic of modern American literature and addresses racial injustice.",
-  },
-  {
-    id: "item-4",
-    question: "What is the square root of 64?",
-    answer:
-      "The square root of 64 is 8. This is because 8 multiplied by itself equals 64.",
-  },
+const sampleOptions = [
+  "Option 1",
+  "Option 2",
+  "Option 3",
+  "Option 4",
+  "Option 5",
 ];
 
-const AccordionStripedDemo = () => {
-  return (
-    <Accordion type="single" collapsible className="w-full">
-      {data.map((item) => (
-        <AccordionItem key={item.id} value={item.id} variant="striped">
-          <AccordionTrigger className="font-bold">
-            {item.question}
-          </AccordionTrigger>
-          <AccordionContent>{item.answer}</AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
-  );
-};
+interface SelectionDialogType {
+  options: string[];
+  onSelect: () => void;
+}
 
-export default AccordionStripedDemo;
+const SelectionDialog = ({
+  options = sampleOptions,
+  onSelect,
+}: SelectionDialogType) => (
+  <AlertDialog>
+    <AlertDialogTrigger
+      asChild
+      className="dark:border-gray-800 dark:hover:bg-gray-900"
+    >
+      <Button variant="outline">Make Selection</Button>
+    </AlertDialogTrigger>
+    <AlertDialogContent className="dark:bg-black dark:border-gray-800">
+      <AlertDialogHeader>
+        <AlertDialogTitle>Select an Option</AlertDialogTitle>
+        <AlertDialogDescription>
+          Please choose one of the following options.
+        </AlertDialogDescription>
+      </AlertDialogHeader>
+      <RadioGroup defaultValue="option1">
+        <div className="flex items-center">
+          <RadioGroupItem value="option1" id="option1" />
+          <p>Option1</p>
+        </div>
+        <div className="flex items-center">
+          <RadioGroupItem value="option2" id="option2" />
+          <p>Option2</p>
+        </div>
+        <div className="flex items-center">
+          <RadioGroupItem value="option3" id="option3" />
+          <p>Option3</p>
+        </div>
+      </RadioGroup>
+      <AlertDialogFooter>
+        <AlertDialogCancel className="dark:border-gray-800 dark:hover:bg-gray-900">
+          Cancel
+        </AlertDialogCancel>
+        <AlertDialogAction onClick={onSelect}>Confirm</AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
+);
+
+export default SelectionDialog;
+`}
+</ComponentPreview>
+
+### Success Dialog
+<ComponentPreview name="alert-success-demo">
+{`import { Button } from "@/components/ui/button";
+import {
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogFooter,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+
+interface SuccessDialogType {
+  message: string;
+}
+
+const SuccessDialog = ({ message }: SuccessDialogType) => (
+  <AlertDialog>
+    <AlertDialogTrigger
+      asChild
+      className="dark:border-gray-800 dark:hover:bg-gray-900"
+    >
+      <Button variant="outline">Show Success</Button>
+    </AlertDialogTrigger>
+    <AlertDialogContent className="dark:bg-black dark:border-gray-800">
+      <AlertDialogHeader>
+        <AlertDialogTitle>Success!</AlertDialogTitle>
+        <AlertDialogDescription>{message}</AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogAction>OK</AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
+);
+
+export default SuccessDialog;
+`}
+</ComponentPreview>
+
+### Warning Dialog
+<ComponentPreview name="alert-warning-demo">
+{`import { Button } from "@/components/ui/button";
+import {
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+
+interface WarningDialogType {
+  message: string;
+  onProceed: () => void;
+}
+
+const WarningDialog = ({ message, onProceed }: WarningDialogType) => (
+  <AlertDialog>
+    <AlertDialogTrigger asChild>
+      <Button
+        variant="outline"
+        className="dark:border-gray-800 dark:hover:bg-gray-900"
+      >
+        Proceed with Caution
+      </Button>
+    </AlertDialogTrigger>
+    <AlertDialogContent className="dark:bg-black dark:border-gray-800">
+      <AlertDialogHeader>
+        <AlertDialogTitle>Warning</AlertDialogTitle>
+        <AlertDialogDescription>{message}</AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogCancel className="dark:border-gray-800 dark:hover:bg-gray-900">
+          Cancel
+        </AlertDialogCancel>
+        <AlertDialogAction onClick={onProceed}>Proceed</AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
+);
+
+export default WarningDialog;
 `}
 </ComponentPreview>

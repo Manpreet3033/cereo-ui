@@ -32,3 +32,552 @@ const AlertDemo = () => {
 export default AlertDemo;
 `}
 </ComponentPreview>
+
+
+### Install ShadCN/UI
+<br/>
+```bash
+npx shadcn@latest init
+```
+<br/>
+```bash
+npx shadcn@latest add alert
+```
+<br/>
+
+## Usage
+
+<br/>
+
+```tsx
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+```
+
+<br/>
+
+```tsx
+<Alert>
+  <Terminal className="h-4 w-4" />
+  <AlertTitle>Heads up!</AlertTitle>
+  <AlertDescription>
+    You can add components and dependencies to your app using the cli.
+  </AlertDescription>
+</Alert>
+```
+
+## Setup 
+<br/>
+
+<Steps>
+  <Step>
+    Create the File
+  </Step>
+   <ul className={"my-6 ml-20 list-disc"}>
+      <li>Navigate to the `@/components` directory.</li>
+      <li>Create a new file named `shad-alert.tsx`.</li>
+    </ul>
+  <Step>
+    Add the Code
+  </Step>
+  <ol className={"my-6 ml-20 list-decimal"}>
+      <li>Copy the provided code.</li>
+      <li>Paste it into the new `shad-alert.tsx` file.</li>
+    </ol>
+```tsx
+import React, { useState, useEffect } from "react";
+import {
+  Terminal,
+  CheckCircle,
+  AlertTriangle,
+  XOctagon,
+  Info,
+  X,
+  Bell,
+  Loader2,
+  Zap,
+  Coffee,
+  Sun,
+  Moon,
+  Cloud,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+
+type AlertVariant =
+  | "default"
+  | "success"
+  | "warning"
+  | "error"
+  | "info"
+  | "primary"
+  | "secondary"
+  | "loading"
+  | "accent"
+  | "neutral"
+  | "dark"
+  | "light"
+  | "gradient";
+
+type AlertSize = "sm" | "md" | "lg";
+
+interface ShadAlertProps {
+  variant?: AlertVariant;
+  title: string;
+  description: string;
+  size?: AlertSize;
+  closable?: boolean;
+  onClose?: () => void;
+  action?: React.ReactNode;
+  icon?: React.ReactNode;
+  duration?: number;
+  animated?: boolean;
+}
+
+export const ShadAlert = ({
+  variant = "default",
+  title,
+  description,
+  size = "md",
+  closable = false,
+  onClose,
+  action,
+  icon,
+  duration,
+  animated = false,
+}: ShadAlertProps) => {
+  const [progress, setProgress] = useState(100);
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    if (duration && duration > 0) {
+      const timer = setInterval(() => {
+        setProgress((oldProgress) => {
+          if (oldProgress <= 0) {
+            clearInterval(timer);
+            return 0;
+          }
+          return oldProgress - 100 / (duration * 10);
+        });
+      }, 100);
+
+      return () => {
+        clearInterval(timer);
+      };
+    }
+  }, [duration]);
+
+  useEffect(() => {
+    if (progress <= 0) {
+      const timeout = setTimeout(() => setIsVisible(false), 300);
+      return () => clearTimeout(timeout);
+    }
+  }, [progress]);
+
+  const variantStyles: Record<AlertVariant, string> = {
+    default: "bg-secondary text-secondary-foreground",
+    success: "bg-green-50 text-green-900 border-green-200",
+    warning: "bg-yellow-50 text-yellow-900 border-yellow-200",
+    error: "bg-red-50 text-red-900 border-red-200",
+    info: "bg-blue-50 text-blue-900 border-blue-200",
+    primary: "bg-primary text-primary-foreground",
+    secondary: "bg-secondary text-secondary-foreground",
+    loading: "bg-gray-50 text-gray-900 border-gray-200",
+    accent: "bg-purple-100 text-purple-900 border-purple-200",
+    neutral: "bg-gray-100 text-gray-900 border-gray-200",
+    dark: "bg-gray-800 text-white border-gray-700",
+    light: "bg-white text-gray-900 border-gray-100",
+    gradient:
+      "bg-gradient-to-r from-blue-500 to-purple-500 text-white border-transparent",
+  };
+
+  const icons: Record<AlertVariant, React.ReactNode> = {
+    default: <Terminal className="h-5 w-5" />,
+    success: (
+      <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-600" />
+    ),
+    warning: (
+      <AlertTriangle className="h-5 w-5 text-yellow-600 dark:text-yellow-600" />
+    ),
+    error: <XOctagon className="h-5 w-5 text-red-600 dark:text-red-600" />,
+    info: <Info className="h-5 w-5 text-blue-600 dark:text-blue-600" />,
+    primary: <Bell className="h-5 w-5 dark:text-black" color="purple" />,
+    secondary: <Info className="h-5 w-5" />,
+    loading: <Loader2 className="h-5 w-5 animate-spin" color="black" />,
+    accent: <Zap className="h-5 w-5 text-purple-600 dark:text-purple-600" />,
+    neutral: <Coffee className="h-5 w-5 text-gray-600 dark:text-gray-600" />,
+    dark: <Moon className="h-5 w-5" color="white" />,
+    light: <Sun className="h-5 w-5 text-yellow-400 dark:text-yellow-400" />,
+    gradient: <Cloud className="h-5 w-5 text-white dark:text-white" />,
+  };
+
+  const sizeStyles: Record<AlertSize, string> = {
+    sm: "p-2 text-sm",
+    md: "p-4 text-base",
+    lg: "p-6 text-lg",
+  };
+
+  if (!isVisible) return null;
+
+  return (
+    <Alert
+      className={cn(
+        variantStyles[variant],
+        sizeStyles[size],
+        "relative overflow-hidden transition-all duration-300 ease-in-out",
+        animated && "animate-in slide-in-from-top-5 fade-in duration-300",
+        progress <= 0 && "animate-out slide-out-to-top-5 fade-out duration-300"
+      )}
+    >
+      {icon || icons[variant]}
+      <AlertTitle className="mb-1">{title}</AlertTitle>
+      <AlertDescription>{description}</AlertDescription>
+      {action && <div className="mt-2">{action}</div>}
+      {closable && (
+        <Button
+          variant="ghost"
+          size="sm"
+          className="absolute top-2 right-2 hover:bg-transparent"
+          onClick={onClose}
+        >
+          <X className="h-5 w-5" />
+          <span className="sr-only">Close</span>
+        </Button>
+      )}
+      {duration && (
+        <Progress
+          value={progress}
+          className="absolute bottom-0 left-0 right-0 h-1 bg-transparent [&>div]:bg-secondary-foreground/40 dark:[&>div]:bg-primary-foreground/60"
+        />
+      )}
+    </Alert>
+  );
+};
+```
+</Steps>
+
+## Examples
+
+### Default Alert
+
+<ComponentPreview name="alert-default">
+{`import { ShadAlert } from "@/components/common/shad-alert";
+import React from "react";
+
+const AlertDefault = () => {
+  return (
+    <ShadAlert
+      title="Default Alert"
+      description="This is the default alert style."
+      size="sm"
+      animated
+    />
+  );
+};
+
+export default AlertDefault;
+`}
+</ComponentPreview>
+
+### Custom Alert
+<ComponentPreview name="alert-custom">
+{`import { ShadAlert } from "@/components/common/shad-alert";
+import { Construction } from "lucide-react";
+import React from "react";
+
+const AlertCustom = () => {
+  return (
+    <ShadAlert
+      variant="primary"
+      title="Custom Icon Alert"
+      description="This alert uses a custom icon."
+      icon={<Construction className="h-5 w-5" color="red" />}
+      animated
+    />
+  );
+};
+
+export default AlertCustom;
+`}
+</ComponentPreview>
+
+### Light Alert
+<ComponentPreview name="alert-light">
+{`import { ShadAlert } from "@/components/common/shad-alert";
+import React from "react";
+
+const AlertLight = () => {
+  return (
+    <ShadAlert
+      variant="light"
+      title="Light Alert"
+      description="A light-themed alert for bright interfaces."
+      animated
+    />
+  );
+};
+
+export default AlertLight;
+`}
+</ComponentPreview>
+
+
+### Dark Alert
+
+<ComponentPreview name="alert-dark">
+{`import { ShadAlert } from "@/components/common/shad-alert";
+import React from "react";
+
+const AlertDark = () => {
+  return (
+    <ShadAlert
+      variant="dark"
+      title="Dark Alert"
+      description="A dark-themed alert for contrast or night mode."
+      animated
+    />
+  );
+};
+
+export default AlertDark;
+`}
+</ComponentPreview>
+
+### Accent Alert
+<ComponentPreview name="alert-accent">
+{`import { ShadAlert } from "@/components/common/shad-alert";
+import React from "react";
+
+const AlertAccent = () => {
+  return (
+    <ShadAlert
+      variant="accent"
+      title="Accent Alert"
+      description="This alert uses an accent color for emphasis."
+      animated
+    />
+  );
+};
+
+export default AlertAccent;
+`}
+</ComponentPreview>
+
+### Success Alert
+<ComponentPreview name="alert-success">
+{`import { ShadAlert } from "@/components/common/shad-alert";
+import React from "react";
+
+const AlertSuccess = () => {
+  return (
+    <ShadAlert
+      variant="success"
+      title="Success!"
+      description="Your action was completed successfully."
+      closable
+      animated
+    />
+  );
+};
+
+export default AlertSuccess;
+`}
+</ComponentPreview>
+
+### Error Alert
+<ComponentPreview name="alert-error">
+{`import { ShadAlert } from "@/components/common/shad-alert";
+import { Button } from "@/components/ui/button";
+import React from "react";
+
+const AlertError = () => {
+  return (
+    <ShadAlert
+      variant="error"
+      title="Error"
+      description="An error occurred. Please try again."
+      closable
+      action={
+        <Button variant="destructive" size="sm">
+          Retry
+        </Button>
+      }
+      animated
+    />
+  );
+};
+
+export default AlertError;
+`}
+</ComponentPreview>
+
+### Gradient Alert
+<ComponentPreview name="alert-gradient">
+{`import { ShadAlert } from "@/components/common/shad-alert";
+import React from "react";
+
+const AlertGradient = () => {
+  return (
+    <ShadAlert
+      variant="gradient"
+      title="Gradient Alert"
+      description="An eye-catching gradient alert for special messages."
+      animated
+    />
+  );
+};
+
+export default AlertGradient;
+`}
+</ComponentPreview>
+
+### Neutral Alert
+<ComponentPreview name="alert-neutral">
+{`import { ShadAlert } from "@/components/common/shad-alert";
+import React from "react";
+
+const AlertNeutral = () => {
+  return (
+    <ShadAlert
+      variant="neutral"
+      title="Neutral Alert"
+      description="A neutral-toned alert for general messages."
+      animated
+    />
+  );
+};
+
+export default AlertNeutral;
+`}
+</ComponentPreview>
+
+### Info Alert
+<ComponentPreview name="alert-info">
+{`import { ShadAlert } from "@/components/common/shad-alert";
+import React from "react";
+
+const AlertInfo = () => {
+  return (
+    <ShadAlert
+      variant="info"
+      title="Information"
+      description="Here's some additional information you might find useful."
+      size="sm"
+      animated
+    />
+  );
+};
+
+export default AlertInfo;
+`}
+</ComponentPreview>
+
+### Loading Alert
+<ComponentPreview name="alert-loading">
+{`import { ShadAlert } from "@/components/common/shad-alert";
+import React from "react";
+
+const AlertLoading = () => {
+  return (
+    <ShadAlert
+      variant="loading"
+      title="Loading"
+      description="Please wait while we process your request."
+      animated
+    />
+  );
+};
+
+export default AlertLoading;
+`}
+</ComponentPreview>
+
+### Primary Alert
+<ComponentPreview name="alert-primary">
+{`import { ShadAlert } from "@/components/common/shad-alert";
+import React from "react";
+
+const AlertPrimary = () => {
+  return (
+    <ShadAlert
+      variant="primary"
+      title="Primary Alert"
+      description="This is a primary-colored alert for important messages."
+      animated
+    />
+  );
+};
+
+export default AlertPrimary;
+`}
+</ComponentPreview>
+
+### Secondary Alert
+<ComponentPreview name="alert-secondary">
+{`import { ShadAlert } from "@/components/common/shad-alert";
+import React from "react";
+
+const AlertSecondary = () => {
+  return (
+    <ShadAlert
+      variant="secondary"
+      title="Secondary Alert"
+      description="This is a secondary-colored alert for less critical information."
+      animated
+    />
+  );
+};
+
+export default AlertSecondary;
+`}
+</ComponentPreview>
+
+### Timed Alert
+<ComponentPreview name="alert-timed">
+{`import { ShadAlert } from "@/components/common/shad-alert";
+import React from "react";
+
+const AlertTimed = () => {
+  return (
+    <ShadAlert
+      variant="info"
+      title="Timed Alert"
+      description="This alert will disappear in 5 seconds."
+      duration={10}
+      animated
+    />
+  );
+};
+
+export default AlertTimed;
+`}
+</ComponentPreview>
+
+
+### Warning Alert
+<ComponentPreview name="alert-warning">
+{`import { ShadAlert } from "@/components/common/shad-alert";
+import { Button } from "@/components/ui/button";
+import React from "react";
+
+const AlertWarning = () => {
+  return (
+    <ShadAlert
+      variant="warning"
+      title="Warning"
+      description="Please be cautious about this action."
+      size="lg"
+      action={
+        <Button variant="outline" size="sm">
+          Acknowledge
+        </Button>
+      }
+      animated
+    />
+  );
+};
+
+export default AlertWarning;
+`}
+</ComponentPreview>

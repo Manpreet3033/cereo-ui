@@ -116,12 +116,12 @@ export const ShadAlert = ({
     ),
     error: <XOctagon className="h-5 w-5 text-red-600 dark:text-red-600" />,
     info: <Info className="h-5 w-5 text-blue-600 dark:text-blue-600" />,
-    primary: <Bell className="h-5 w-5" />,
+    primary: <Bell className="h-5 w-5 dark:text-black" color="purple" />,
     secondary: <Info className="h-5 w-5" />,
-    loading: <Loader2 className="h-5 w-5 animate-spin" />,
+    loading: <Loader2 className="h-5 w-5 animate-spin" color="black" />,
     accent: <Zap className="h-5 w-5 text-purple-600 dark:text-purple-600" />,
     neutral: <Coffee className="h-5 w-5 text-gray-600 dark:text-gray-600" />,
-    dark: <Moon className="h-5 w-5 text-white dark:text-white" />,
+    dark: <Moon className="h-5 w-5" color="white" />,
     light: <Sun className="h-5 w-5 text-yellow-400 dark:text-yellow-400" />,
     gradient: <Cloud className="h-5 w-5 text-white dark:text-white" />,
   };
@@ -162,199 +162,9 @@ export const ShadAlert = ({
       {duration && (
         <Progress
           value={progress}
-          className="absolute bottom-0 left-0 right-0 h-1 bg-transparent"
+          className="absolute bottom-0 left-0 right-0 h-1 bg-transparent [&>div]:bg-secondary-foreground/40 dark:[&>div]:bg-primary-foreground/60"
         />
       )}
     </Alert>
   );
 };
-
-export default function AlertDemo() {
-  const [showAlerts, setShowAlerts] = useState<Record<string, boolean>>({
-    default: true,
-    success: true,
-    warning: true,
-    error: true,
-    info: true,
-    primary: true,
-    secondary: true,
-    loading: true,
-    accent: true,
-    neutral: true,
-    dark: true,
-    light: true,
-    gradient: true,
-    custom: true,
-    timed: true,
-  });
-
-  const handleClose = (key: string) => {
-    setShowAlerts((prev) => ({ ...prev, [key]: false }));
-  };
-
-  const resetAlerts = () => {
-    setShowAlerts({
-      default: true,
-      success: true,
-      warning: true,
-      error: true,
-      info: true,
-      primary: true,
-      secondary: true,
-      loading: true,
-      accent: true,
-      neutral: true,
-      dark: true,
-      light: true,
-      gradient: true,
-      custom: true,
-      timed: true,
-    });
-  };
-
-  return (
-    <div className="space-y-4">
-      {showAlerts.default && (
-        <ShadAlert
-          title="Default Alert"
-          description="This is the default alert style."
-          size="sm"
-          animated
-        />
-      )}
-      {showAlerts.success && (
-        <ShadAlert
-          variant="success"
-          title="Success!"
-          description="Your action was completed successfully."
-          closable
-          onClose={() => handleClose("success")}
-          animated
-        />
-      )}
-      {showAlerts.warning && (
-        <ShadAlert
-          variant="warning"
-          title="Warning"
-          description="Please be cautious about this action."
-          size="lg"
-          action={
-            <Button variant="outline" size="sm">
-              Acknowledge
-            </Button>
-          }
-          animated
-        />
-      )}
-      {showAlerts.error && (
-        <ShadAlert
-          variant="error"
-          title="Error"
-          description="An error occurred. Please try again."
-          closable
-          onClose={() => handleClose("error")}
-          action={
-            <Button variant="destructive" size="sm">
-              Retry
-            </Button>
-          }
-          animated
-        />
-      )}
-      {showAlerts.info && (
-        <ShadAlert
-          variant="info"
-          title="Information"
-          description="Here's some additional information you might find useful."
-          size="sm"
-          animated
-        />
-      )}
-      {showAlerts.primary && (
-        <ShadAlert
-          variant="primary"
-          title="Primary Alert"
-          description="This is a primary-colored alert for important messages."
-          animated
-        />
-      )}
-      {showAlerts.secondary && (
-        <ShadAlert
-          variant="secondary"
-          title="Secondary Alert"
-          description="This is a secondary-colored alert for less critical information."
-          animated
-        />
-      )}
-      {showAlerts.loading && (
-        <ShadAlert
-          variant="loading"
-          title="Loading"
-          description="Please wait while we process your request."
-          animated
-        />
-      )}
-      {showAlerts.accent && (
-        <ShadAlert
-          variant="accent"
-          title="Accent Alert"
-          description="This alert uses an accent color for emphasis."
-          animated
-        />
-      )}
-      {showAlerts.neutral && (
-        <ShadAlert
-          variant="neutral"
-          title="Neutral Alert"
-          description="A neutral-toned alert for general messages."
-          animated
-        />
-      )}
-      {showAlerts.dark && (
-        <ShadAlert
-          variant="dark"
-          title="Dark Alert"
-          description="A dark-themed alert for contrast or night mode."
-          animated
-        />
-      )}
-      {showAlerts.light && (
-        <ShadAlert
-          variant="light"
-          title="Light Alert"
-          description="A light-themed alert for bright interfaces."
-          animated
-        />
-      )}
-      {showAlerts.gradient && (
-        <ShadAlert
-          variant="gradient"
-          title="Gradient Alert"
-          description="An eye-catching gradient alert for special messages."
-          animated
-        />
-      )}
-      {showAlerts.custom && (
-        <ShadAlert
-          variant="primary"
-          title="Custom Icon Alert"
-          description="This alert uses a custom icon."
-          icon={<Bell className="h-5 w-5 text-primary-foreground" />}
-          animated
-        />
-      )}
-      {showAlerts.timed && (
-        <ShadAlert
-          variant="info"
-          title="Timed Alert"
-          description="This alert will disappear in 5 seconds."
-          duration={5}
-          animated
-        />
-      )}
-      <Button onClick={resetAlerts} className="mt-4">
-        Reset Alerts
-      </Button>
-    </div>
-  );
-}

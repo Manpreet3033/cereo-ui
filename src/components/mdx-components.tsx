@@ -129,7 +129,7 @@ export function getMDXComponents() {
       />
     ),
     ul: ({ className, ...props }: React.HTMLAttributes<HTMLUListElement>) => (
-      <ul className={cn("my-6 ml-6 list-disc", className)} {...props} />
+      <ul className={cn("my-6 ml-20 list-disc", className)} {...props} />
     ),
     ol: ({ className, ...props }: React.HTMLAttributes<HTMLOListElement>) => (
       <ol className={cn("my-6 ml-6 list-decimal", className)} {...props} />
@@ -218,7 +218,11 @@ export function getMDXComponents() {
           : "tsx";
 
       return codeString.includes("tailwind.config.js") ||
-        codeString.startsWith("@/components/ui/") ? (
+        codeString.startsWith("@/components/ui/") ||
+        codeString === "@/components" ||
+        codeString === "shad-alert.tsx" ||
+        codeString === "A" ||
+        codeString === "Enter or Return" ? (
         <code
           className={`relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm ${className}`}
           {...props}
