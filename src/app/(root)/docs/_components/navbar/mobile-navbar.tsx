@@ -13,10 +13,19 @@ import { getSidebarProps } from "@/lib/utils";
 const MobileNav = async ({
   params,
 }: {
-  params: Promise<{ slug: string[] }>;
+  params?: Promise<{ slug: string[] }>;
 }) => {
   const sections = getSidebarProps();
-  const slug = params && (await params).slug[0];
+  let slug: string | undefined;
+
+  if (params) {
+    try {
+      const resolvedParams = await params;
+      slug = resolvedParams?.slug?.[0];
+    } catch (error) {
+      console.error("Error resolving params:", error);
+    }
+  }
   return (
     <Drawer>
       <DrawerTrigger className="flex items-center mr-2">

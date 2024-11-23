@@ -760,7 +760,7 @@ interface NewsletterSubscriptionDialogType {
   onSubscribe: (email: string) => void;
 }
 export const NewsletterDialog = ({
-  onSubscribe,
+  onSubscribe = (email) => {},
 }: NewsletterSubscriptionDialogType) => {
   const [email, setEmail] = React.useState("");
   const [consent, setConsent] = React.useState(false);

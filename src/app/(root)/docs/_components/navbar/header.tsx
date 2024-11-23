@@ -6,7 +6,7 @@ import SearchInput from "@/components/common/search-input";
 export default function Header({
   params,
 }: {
-  params: Promise<{ slug: string[] }>;
+  params?: Promise<{ slug: string[] }>;
 }) {
   return (
     <header className="fixed top-0 gap-2 z-40 w-full border-b dark:border-gray-800 border-gray-300 dark:bg-black/50 backdrop-blur-lg">

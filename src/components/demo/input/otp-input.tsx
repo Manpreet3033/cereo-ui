@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { OTPInput, SlotProps } from "input-otp";
 import { Minus } from "lucide-react";
-import React, { useEffect } from "react";
+import React from "react";
 
 interface OTPType {
   code: string;

@@ -142,7 +142,7 @@ import {
 
 ### Confirmation Dialog
 
-<ComponentPreview name="alert-confirmation-demo">
+<ComponentPreview name="alert-confirmation-demo" language="tsx">
 {`import React from "react";
 import {
   AlertDialog,
@@ -203,7 +203,7 @@ export default AlertConfirmationDialog;
 </ComponentPreview>
 
 ### Error Dialog
-<ComponentPreview name="alert-error-demo">
+<ComponentPreview name="alert-error-demo" language="tsx">
 {`import {
   AlertDialog,
   AlertDialogAction,
@@ -252,7 +252,7 @@ export default ErrorDialog;
 </ComponentPreview>
 
 ### Form Dialog
-<ComponentPreview name="alert-form-demo">
+<ComponentPreview name="alert-form-demo" language="tsx">
 {`import {
   AlertDialog,
   AlertDialogAction,
@@ -338,7 +338,7 @@ export default FormDialog;
 
 ### Help Dialog
 
-<ComponentPreview name="alert-help-demo">
+<ComponentPreview name="alert-help-demo" language="tsx">
 {`import {
   AlertDialog,
   AlertDialogAction,
@@ -382,7 +382,7 @@ export default HelpDialog;
 </ComponentPreview>
 
 ### Information Dialog
-<ComponentPreview name="alert-information-demo">
+<ComponentPreview name="alert-information-demo" language="tsx">
 {`import {
   AlertDialog,
   AlertDialogAction,
@@ -429,7 +429,7 @@ export default InformationDialog;
 </ComponentPreview>
 
 ### Input Dialog
-<ComponentPreview name="alert-input-demo">
+<ComponentPreview name="alert-input-demo" language="tsx">
 {`import { Button } from "@/components/ui/button";
 import {
   AlertDialogDescription,
@@ -490,7 +490,7 @@ export default InputDialog;
 </ComponentPreview>
 
 ### Progress Alert
-<ComponentPreview name="alert-progress-demo">
+<ComponentPreview name="alert-progress-demo" language="tsx">
 {`import {
   AlertDialog,
   AlertDialogAction,
@@ -538,7 +538,7 @@ export default ProgressDialog;
 </ComponentPreview>
 
 ### Selection Dialog
-<ComponentPreview name="alert-selection-demo">
+<ComponentPreview name="alert-selection-demo" language="tsx">
 {`import {
   AlertDialog,
   AlertDialogAction,
@@ -614,7 +614,7 @@ export default SelectionDialog;
 </ComponentPreview>
 
 ### Success Dialog
-<ComponentPreview name="alert-success-demo">
+<ComponentPreview name="alert-success-demo" language="tsx">
 {`import { Button } from "@/components/ui/button";
 import {
   AlertDialogDescription,
@@ -656,7 +656,7 @@ export default SuccessDialog;
 </ComponentPreview>
 
 ### Warning Dialog
-<ComponentPreview name="alert-warning-demo">
+<ComponentPreview name="alert-warning-demo" language="tsx">
 {`import { Button } from "@/components/ui/button";
 import {
   AlertDialogDescription,
@@ -688,7 +688,9 @@ const WarningDialog = ({ message, onProceed }: WarningDialogType) => (
     <AlertDialogContent className="dark:bg-black dark:border-gray-800">
       <AlertDialogHeader>
         <AlertDialogTitle>Warning</AlertDialogTitle>
-        <AlertDialogDescription>{message}</AlertDialogDescription>
+        <AlertDialogDescription>
+          {message ?? "Proceed at your own risk!!!"}
+        </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
         <AlertDialogCancel className="dark:border-gray-800 dark:hover:bg-gray-900">
@@ -701,5 +703,1516 @@ const WarningDialog = ({ message, onProceed }: WarningDialogType) => (
 );
 
 export default WarningDialog;
+`}
+</ComponentPreview>
+
+
+### Notification Dialog
+<ComponentPreview name="alert-notification-demo" language="tsx">
+{`import React from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+
+interface NotificationDialogType {
+  title: string;
+  message: string;
+}
+
+const NotificationDialog = ({ title, message }: NotificationDialogType) => (
+  <AlertDialog>
+    <AlertDialogTrigger asChild>
+      <Button
+        variant="outline"
+        className="dark:border-gray-800 dark:hover:bg-gray-900"
+      >
+        Show Notification
+      </Button>
+    </AlertDialogTrigger>
+    <AlertDialogContent className="dark:border-gray-800 dark:bg-black">
+      <AlertDialogHeader>
+        <AlertDialogTitle>{title ?? "Message Title"}</AlertDialogTitle>
+        <AlertDialogDescription>
+          {message ?? "Notification Message"}
+        </AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogAction>Dismiss</AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
+);
+
+export default NotificationDialog;
+`}
+</ComponentPreview>
+
+### Terms and Condition Dialog
+<ComponentPreview name="alert-terms-demo" language="tsx">
+{`import { Button } from "@/components/ui/button";
+import {
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+
+interface TermsDialogType {
+  terms: string;
+  onAccept: () => void;
+}
+const TermsDialog = ({ terms, onAccept }: TermsDialogType) => (
+  <AlertDialog>
+    <AlertDialogTrigger asChild>
+      <Button
+        variant="outline"
+        className="dark:border-gray-800 dark:hover:bg-gray-900"
+      >
+        View Terms
+      </Button>
+    </AlertDialogTrigger>
+    <AlertDialogContent className="dark:bg-black dark:border-gray-800">
+      <AlertDialogHeader>
+        <AlertDialogTitle>Terms and Conditions</AlertDialogTitle>
+      </AlertDialogHeader>
+      <div className="max-h-[60vh] overflow-y-auto">
+        <AlertDialogDescription>
+          {terms ?? "Your Terms and Condition Here..."}
+        </AlertDialogDescription>
+      </div>
+      <AlertDialogFooter>
+        <AlertDialogCancel className="dark:border-gray-800 dark:hover:bg-gray-900">
+          Decline
+        </AlertDialogCancel>
+        <AlertDialogAction onClick={onAccept}>Accept</AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
+);
+
+export default TermsDialog;
+`}
+</ComponentPreview>
+
+### Feedback Dialog
+<ComponentPreview name="alert-feedback-demo" language="tsx">
+{`import { Button } from "@/components/ui/button";
+import {
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import { Textarea } from "@/components/ui/textarea";
+import React from "react";
+
+interface FeedbackDialogType {
+  onSubmit: (feedback: string) => void;
+}
+const FeedbackDialog = ({ onSubmit }: FeedbackDialogType) => {
+  const [feedback, setFeedback] = React.useState("");
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="dark:border-gray-800 dark:hover:bg-gray-900"
+        >
+          Give Feedback
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent className="dark:bg-black dark:border-gray-800">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Provide Feedback</AlertDialogTitle>
+          <AlertDialogDescription>
+            We value your opinion. Please share your thoughts with us.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <Textarea
+          value={feedback}
+          onChange={(e) => setFeedback(e.target.value)}
+          placeholder="Enter your feedback here"
+          className="dark:bg-gray-900 dark:border-gray-800"
+        />
+        <AlertDialogFooter>
+          <AlertDialogCancel className="dark:border-gray-800 dark:hover:bg-gray-900">
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction
+            onClick={() =>
+              onSubmit != null ? onSubmit(feedback) : console.log(feedback)
+            }
+          >
+            Submit
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+
+export default FeedbackDialog;
+`}
+</ComponentPreview>
+
+### Settings Dialog
+<ComponentPreview name="alert-settings-demo" language="tsx">
+{`import { Button } from "@/components/ui/button";
+import {
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import React from "react";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+
+interface SettingsDialogType {
+  settings: Record<string, boolean>;
+  onSave: (newSettings: Record<string, boolean>) => void;
+}
+const SettingsDialog = ({ settings, onSave }: SettingsDialogType) => {
+  const [localSettings, setLocalSettings] = React.useState<
+    Record<string, boolean>
+  >(settings ?? { notifications: true, darkMode: false, autoSave: true });
+  const handleCheckedChange = (key: string, checked: boolean) => {
+    setLocalSettings((prev) => ({ ...prev, [key]: checked }));
+  };
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="dark:border-gray-800 dark:hover:bg-gray-900"
+        >
+          Open Settings
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent className="dark:bg-black dark:border-gray-800">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Settings</AlertDialogTitle>
+          <AlertDialogDescription>
+            Adjust your preferences below.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <div className="grid gap-4 py-4">
+          {Object.entries(localSettings).map(([key, value]) => (
+            <div key={key} className="flex items-center space-x-2">
+              <Checkbox
+                id={key}
+                checked={value}
+                onCheckedChange={(checked) =>
+                  handleCheckedChange(key, checked as boolean)
+                }
+              />
+              <Label htmlFor={key}>{key}</Label>
+            </div>
+          ))}
+        </div>
+        <AlertDialogFooter>
+          <AlertDialogCancel className="dark:border-gray-800 dark:hover:bg-gray-900">
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction
+            onClick={() =>
+              onSave != null
+                ? onSave(localSettings)
+                : console.log(localSettings)
+            }
+          >
+            Save Changes
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+
+export default SettingsDialog;
+`}
+</ComponentPreview>
+
+### Delete Account Dialog
+<ComponentPreview name="alert-delete-demo" language="tsx">
+{`import { Button } from "@/components/ui/button";
+import {
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import { Trash2 } from "lucide-react";
+
+interface CustomIconDialogType {
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  title: string;
+  description: string;
+  onConfirm: () => void;
+}
+
+export const CustomIconDialog = ({
+  icon: Icon,
+  title,
+  description,
+  onConfirm,
+}: CustomIconDialogType) => (
+  <AlertDialog>
+    <AlertDialogTrigger asChild>
+      <Button
+        variant="outline"
+        className="dark:border-gray-800 dark:hover:bg-gray-900"
+      >
+        Open Delete Account Dialog
+      </Button>
+    </AlertDialogTrigger>
+    <AlertDialogContent className="dark:bg-black dark:border-gray-800">
+      <AlertDialogHeader>
+        <div className="flex items-center space-x-2">
+          <Icon className="h-6 w-6" />
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+        </div>
+        <AlertDialogDescription>{description}</AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogCancel className="dark:border-gray-800 dark:hover:bg-gray-900">
+          Cancel
+        </AlertDialogCancel>
+        <AlertDialogAction onClick={onConfirm}>Confirm</AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
+);
+const DeleteAccountDialog = () => (
+  <CustomIconDialog
+    icon={Trash2}
+    title="Delete Account"
+    description="Are you sure you want to delete your account? This action cannot be undone."
+    onConfirm={() => console.log("Account deleted")}
+  />
+);
+
+export default DeleteAccountDialog;
+`}
+</ComponentPreview>
+
+
+### Share Dialog
+<ComponentPreview name="alert-share-demo" language="tsx">
+{`import { Button } from "@/components/ui/button";
+import {
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import { Share2 } from "lucide-react";
+
+interface CustomIconDialogType {
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  title: string;
+  description: string;
+  onConfirm: () => void;
+}
+
+export const CustomIconDialog = ({
+  icon: Icon,
+  title,
+  description,
+  onConfirm,
+}: CustomIconDialogType) => (
+  <AlertDialog>
+    <AlertDialogTrigger asChild>
+      <Button
+        variant="outline"
+        className="dark:border-gray-800 dark:hover:bg-gray-900"
+      >
+        Share
+      </Button>
+    </AlertDialogTrigger>
+    <AlertDialogContent className="dark:bg-black dark:border-gray-800">
+      <AlertDialogHeader>
+        <div className="flex items-center space-x-2">
+          <Icon className="h-6 w-6" />
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+        </div>
+        <AlertDialogDescription>{description}</AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogCancel className="dark:border-gray-800 dark:hover:bg-gray-900">
+          Cancel
+        </AlertDialogCancel>
+        <AlertDialogAction onClick={onConfirm}>Confirm</AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
+);
+const ShareDialog = () => (
+  <CustomIconDialog
+    icon={Share2}
+    title="Share Content"
+    description="Choose how you'd like to share this content."
+    onConfirm={() => console.log("Sharing options displayed")}
+  />
+);
+
+export default ShareDialog;
+`}
+</ComponentPreview>
+
+
+### Download Dialog
+<ComponentPreview name="alert-download-demo" language="tsx">
+{`import { Button } from "@/components/ui/button";
+import {
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import { Download } from "lucide-react";
+
+interface CustomIconDialogType {
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  title: string;
+  description: string;
+  onConfirm: () => void;
+}
+
+export const CustomIconDialog = ({
+  icon: Icon,
+  title,
+  description,
+  onConfirm,
+}: CustomIconDialogType) => (
+  <AlertDialog>
+    <AlertDialogTrigger asChild>
+      <Button
+        variant="outline"
+        className="dark:border-gray-800 dark:hover:bg-gray-900"
+      >
+        Download
+      </Button>
+    </AlertDialogTrigger>
+    <AlertDialogContent className="dark:bg-black dark:border-gray-800">
+      <AlertDialogHeader>
+        <div className="flex items-center space-x-2">
+          <Icon className="h-6 w-6" />
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+        </div>
+        <AlertDialogDescription>{description}</AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogCancel className="dark:border-gray-800 dark:hover:bg-gray-900">
+          Cancel
+        </AlertDialogCancel>
+        <AlertDialogAction onClick={onConfirm}>Confirm</AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
+);
+const DownloadDialog = () => (
+  <CustomIconDialog
+    icon={Download}
+    title="Download File"
+    description="You are about to download a large file. Do you want to proceed?"
+    onConfirm={() => console.log("Download started")}
+  />
+);
+
+export default DownloadDialog;
+`}
+</ComponentPreview>
+
+
+### Testimonial Submission Dialog
+<ComponentPreview name="alert-testimonial-demo" language="tsx">
+{`import { Button } from "@/components/ui/button";
+import {
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import React from "react";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Slider } from "@/components/ui/slider";
+import { Textarea } from "@/components/ui/textarea";
+
+interface TestimonialSubmissionDialogType {
+  onSubmit: (testimonial: {
+    name: string;
+    rating: number;
+    testimonial: string;
+  }) => void;
+}
+const TestimonialDialog = ({ onSubmit }: TestimonialSubmissionDialogType) => {
+  const [name, setName] = React.useState("");
+  const [rating, setRating] = React.useState(5);
+  const [testimonial, setTestimonial] = React.useState("");
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const handleSubmit = () => {
+    onSubmit({ name, rating, testimonial });
+    setIsOpen(false);
+    setName("");
+    setRating(5);
+    setTestimonial("");
+  };
+
+  return (
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="dark:border-gray-800 dark:hover:bg-gray-900"
+        >
+          Submit Testimonial
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent className="dark:bg-black dark:border-gray-800">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Submit Your Testimonial</AlertDialogTitle>
+          <AlertDialogDescription>
+            We appreciate your feedback! Please share your experience with us.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Name
+            </Label>
+            <Input
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="col-span-3 dark:bg-black dark:border-gray-800"
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="rating" className="text-right">
+              Rating
+            </Label>
+            <Slider
+              id="rating"
+              min={1}
+              max={5}
+              step={1}
+              value={[rating]}
+              onValueChange={(value) => setRating(value[0])}
+              className="col-span-3 dark:bg-gray-900"
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="testimonial" className="text-right">
+              Testimonial
+            </Label>
+            <Textarea
+              id="testimonial"
+              value={testimonial}
+              onChange={(e) => setTestimonial(e.target.value)}
+              className="col-span-3 dark:bg-black dark:border-gray-800"
+            />
+          </div>
+        </div>
+        <AlertDialogFooter>
+          <AlertDialogCancel
+            onClick={() => setIsOpen(false)}
+            className="dark:border-gray-800 dark:hover:bg-gray-900"
+          >
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction onClick={handleSubmit}>Submit</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+
+export default TestimonialDialog;
+`}
+</ComponentPreview>
+
+
+### Image Upload Dialog
+<ComponentPreview name="alert-imageupload-demo" language="tsx">
+{`import { Button } from "@/components/ui/button";
+import {
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import React from "react";
+import { Input } from "@/components/ui/input";
+
+interface ImageUploadDialogType {
+  onUpload: (file: File) => void;
+}
+const ImageUploadDialog = ({ onUpload }: ImageUploadDialogType) => {
+  const [file, setFile] = React.useState<File | null>(null);
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const handleUpload = () => {
+    if (file) {
+      onUpload(file);
+      setIsOpen(false);
+      setFile(null);
+    }
+  };
+
+  return (
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="dark:border-gray-800 dark:hover:bg-gray-900"
+        >
+          Upload Image
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent className="dark:bg-black dark:border-gray-800">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Upload an Image</AlertDialogTitle>
+          <AlertDialogDescription>
+            Choose an image file to upload. Supported formats: JPG, PNG, GIF.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <Input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setFile(e.target.files?.[0] || null)}
+          className="dark:bg-black dark:border-gray-800"
+        />
+        <AlertDialogFooter>
+          <AlertDialogCancel
+            onClick={() => setIsOpen(false)}
+            className="dark:border-gray-800 dark:hover:bg-gray-900"
+          >
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction onClick={handleUpload} disabled={!file}>
+            Upload
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+
+export default ImageUploadDialog;
+`}
+</ComponentPreview>
+
+
+
+### Testimonial Submission Dialog
+<ComponentPreview name="alert-testimonial-demo" language="tsx">
+{`import { Button } from "@/components/ui/button";
+import {
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import React from "react";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Slider } from "@/components/ui/slider";
+import { Textarea } from "@/components/ui/textarea";
+
+interface TestimonialSubmissionDialogType {
+  onSubmit: (testimonial: {
+    name: string;
+    rating: number;
+    testimonial: string;
+  }) => void;
+}
+const TestimonialDialog = ({ onSubmit }: TestimonialSubmissionDialogType) => {
+  const [name, setName] = React.useState("");
+  const [rating, setRating] = React.useState(5);
+  const [testimonial, setTestimonial] = React.useState("");
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const handleSubmit = () => {
+    onSubmit({ name, rating, testimonial });
+    setIsOpen(false);
+    setName("");
+    setRating(5);
+    setTestimonial("");
+  };
+
+  return (
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="dark:border-gray-800 dark:hover:bg-gray-900"
+        >
+          Submit Testimonial
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent className="dark:bg-black dark:border-gray-800">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Submit Your Testimonial</AlertDialogTitle>
+          <AlertDialogDescription>
+            We appreciate your feedback! Please share your experience with us.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Name
+            </Label>
+            <Input
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="col-span-3 dark:bg-black dark:border-gray-800"
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="rating" className="text-right">
+              Rating
+            </Label>
+            <Slider
+              id="rating"
+              min={1}
+              max={5}
+              step={1}
+              value={[rating]}
+              onValueChange={(value) => setRating(value[0])}
+              className="col-span-3 dark:bg-gray-900"
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="testimonial" className="text-right">
+              Testimonial
+            </Label>
+            <Textarea
+              id="testimonial"
+              value={testimonial}
+              onChange={(e) => setTestimonial(e.target.value)}
+              className="col-span-3 dark:bg-black dark:border-gray-800"
+            />
+          </div>
+        </div>
+        <AlertDialogFooter>
+          <AlertDialogCancel
+            onClick={() => setIsOpen(false)}
+            className="dark:border-gray-800 dark:hover:bg-gray-900"
+          >
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction onClick={handleSubmit}>Submit</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+
+export default TestimonialDialog;
+`}
+</ComponentPreview>
+
+
+### Date Picker Dialog
+<ComponentPreview name="alert-date-demo" language="tsx">
+{`import { Button } from "@/components/ui/button";
+import {
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import React from "react";
+import { Calendar } from "@/components/ui/calendar";
+
+interface DatePickerDialogType {
+  onSelect: (date: Date) => void;
+}
+const DatePickerDialog = ({ onSelect }: DatePickerDialogType) => {
+  const [date, setDate] = React.useState<Date | undefined>(undefined);
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const handleSelect = () => {
+    if (date) {
+      onSelect(date);
+      setIsOpen(false);
+      setDate(undefined);
+    }
+  };
+
+  return (
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="dark:border-gray-800 dark:hover:bg-gray-900"
+        >
+          Select Date
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent className="dark:border-gray-800 dark:bg-black">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Choose a Date</AlertDialogTitle>
+          <AlertDialogDescription>
+            Select a date for your appointment or event.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <div className="flex justify-center">
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={setDate}
+            className="rounded-md border dark:border-gray-800 dark:bg-black"
+          />
+        </div>
+        <AlertDialogFooter>
+          <AlertDialogCancel
+            onClick={() => setIsOpen(false)}
+            className="dark:border-gray-800 dark:hover:bg-gray-900"
+          >
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction onClick={handleSelect} disabled={!date}>
+            Confirm
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+export default DatePickerDialog;
+`}
+</ComponentPreview>
+
+
+### Dropdown Dialog
+<ComponentPreview name="alert-dropdown-demo" language="tsx">
+{`import { Button } from "@/components/ui/button";
+import {
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import React from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+interface LanguageSelectionDialogType {
+  languages: { code: string; name: string }[];
+  onSelect: (languageCode: string) => void;
+}
+const LanguageSelectionDialog = ({
+  languages = [
+    { code: "en", name: "English" },
+    { code: "de", name: "German" },
+    { code: "fr", name: "French" },
+    { code: "it", name: "Italian" },
+  ],
+  onSelect = () => {},
+}: LanguageSelectionDialogType) => {
+  const [selectedLanguage, setSelectedLanguage] = React.useState("");
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const handleSelect = () => {
+    if (selectedLanguage) {
+      onSelect(selectedLanguage);
+      setIsOpen(false);
+      setSelectedLanguage("");
+    }
+  };
+
+  return (
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="dark:border-gray-800 dark:hover:bg-gray-900"
+        >
+          Change Language
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent className="dark:bg-black dark:border-gray-800">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Select Language</AlertDialogTitle>
+          <AlertDialogDescription>
+            Choose your preferred language for the application.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <Select onValueChange={setSelectedLanguage}>
+          <SelectTrigger className="dark:bg-black dark:border-gray-800">
+            <SelectValue placeholder="Select a language" />
+          </SelectTrigger>
+          <SelectContent className="dark:bg-black dark:border-gray-800 ">
+            {languages.map((lang) => (
+              <SelectItem
+                key={lang.code}
+                value={lang.code}
+                className="dark:hover:bg-gray-900"
+              >
+                {lang.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <AlertDialogFooter>
+          <AlertDialogCancel
+            onClick={() => setIsOpen(false)}
+            className="dark:border-gray-800 dark:hover:bg-gray-900"
+          >
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction
+            onClick={handleSelect}
+            disabled={!selectedLanguage}
+          >
+            Apply
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+
+export default LanguageSelectionDialog;
+`}
+</ComponentPreview>
+
+### Subscription Dialog
+<ComponentPreview name="alert-subscription-demo" language="tsx">
+{`import { Button } from "@/components/ui/button";
+import {
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import React from "react";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+
+interface NewsletterSubscriptionDialogType {
+  onSubscribe: (email: string) => void;
+}
+const NewsletterDialog = ({
+  onSubscribe = (email) => {},
+}: NewsletterSubscriptionDialogType) => {
+  const [email, setEmail] = React.useState("");
+  const [consent, setConsent] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const handleSubscribe = () => {
+    if (email && consent) {
+      onSubscribe(email);
+      setIsOpen(false);
+      setEmail("");
+      setConsent(false);
+    }
+  };
+
+  return (
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="dark:border-gray-800 dark:hover:bg-gray-900"
+        >
+          Subscribe to Newsletter
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent className="dark:bg-black dark:border-gray-800">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Subscribe to Our Newsletter</AlertDialogTitle>
+          <AlertDialogDescription>
+            Stay updated with our latest news and offers.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <div className="grid gap-4 py-4">
+          <Input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="dark:bg-black dark:border-gray-800"
+          />
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="consent"
+              checked={consent}
+              onCheckedChange={(checked) => setConsent(checked as boolean)}
+            />
+            <Label htmlFor="consent">I agree to receive marketing emails</Label>
+          </div>
+        </div>
+        <AlertDialogFooter>
+          <AlertDialogCancel
+            onClick={() => setIsOpen(false)}
+            className="dark:border-gray-800 dark:hover:bg-gray-900"
+          >
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction
+            onClick={handleSubscribe}
+            disabled={!email || !consent}
+          >
+            Subscribe
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+
+export default NewsletterDialog;
+`}
+</ComponentPreview>
+
+### Stepper Dialog
+<ComponentPreview name="alert-stepper-demo" language="tsx">
+{`import { Button } from "@/components/ui/button";
+import {
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import React from "react";
+import { Progress } from "@/components/ui/progress";
+
+interface FeatureTourDialogType {
+  features: { title: string; description: string }[];
+  onComplete: () => void;
+}
+const FeatureTourDialog = ({
+  features = [
+    { title: "Dashboard", description: "This is your main dashboard." },
+    { title: "Profile", description: "Here you can edit your profile." },
+    {
+      title: "Settings",
+      description: "Adjust your account settings here.",
+    },
+  ],
+  onComplete,
+}: FeatureTourDialogType) => {
+  const [currentStep, setCurrentStep] = React.useState(0);
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const handleComplete = () => {
+    onComplete();
+    setIsOpen(false);
+    setCurrentStep(0);
+  };
+
+  return (
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="dark:border-gray-800 dark:hover:bg-gray-900"
+        >
+          Start Feature Tour
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent className="dark:bg-black dark:border-gray-800">
+        <AlertDialogHeader>
+          <AlertDialogTitle>{features[currentStep]?.title}</AlertDialogTitle>
+          <AlertDialogDescription>
+            {features[currentStep]?.description}
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <Progress
+          value={((currentStep + 1) / features.length) * 100}
+          className="dark:bg-gray-900 dark:border-gray-800"
+        />
+        <AlertDialogFooter>
+          {currentStep > 0 && (
+            <Button
+              variant="outline"
+              onClick={() => setCurrentStep(currentStep - 1)}
+              className="dark:border-gray-800 dark:hover:bg-gray-900"
+            >
+              Previous
+            </Button>
+          )}
+          {currentStep < features.length - 1 ? (
+            <Button onClick={() => setCurrentStep(currentStep + 1)}>
+              Next
+            </Button>
+          ) : (
+            <AlertDialogAction onClick={handleComplete}>
+              Finish Tour
+            </AlertDialogAction>
+          )}
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+
+export default FeatureTourDialog;
+`}
+</ComponentPreview>
+
+
+### Theme Selector Dialog
+<ComponentPreview name="alert-theme-demo" language="tsx">
+{`import { Button } from "@/components/ui/button";
+import {
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import React from "react";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { useTheme } from "next-themes";
+
+interface ColorThemeSelectionDialogType {
+  themes: { value: string; label: string }[];
+  onSelect: (theme: string) => void;
+}
+const ColorThemeDialog = ({
+  themes = [
+    { value: "light", label: "Light" },
+    { value: "dark", label: "Dark" },
+    { value: "system", label: "System" },
+  ],
+  onSelect = () => {},
+}: ColorThemeSelectionDialogType) => {
+  const { theme, setTheme } = useTheme();
+  const [selectedTheme, setSelectedTheme] = React.useState(theme ?? "light");
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const handleSelect = () => {
+    setTheme(selectedTheme);
+    setIsOpen(false);
+    setSelectedTheme(selectedTheme);
+  };
+
+  return (
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="dark:border-gray-800 dark:hover:bg-gray-900"
+        >
+          Choose Color Theme
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent className="dark:border-gray-800 dark:bg-black">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Select Color Theme</AlertDialogTitle>
+          <AlertDialogDescription>
+            Choose a color theme for the application.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <RadioGroup defaultValue={theme} onValueChange={setSelectedTheme}>
+          {themes.map((theme) => (
+            <div key={theme.value} className="flex items-center space-x-2">
+              <RadioGroupItem value={theme.value} id={theme.value} />
+              <Label htmlFor={theme.value}>{theme.label}</Label>
+            </div>
+          ))}
+        </RadioGroup>
+        <AlertDialogFooter>
+          <AlertDialogCancel
+            onClick={() => setIsOpen(false)}
+            className="dark:border-gray-800 dark:hover:bg-gray-900"
+          >
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction onClick={handleSelect} disabled={!selectedTheme}>
+            Apply Theme
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+export default ColorThemeDialog;
+`}
+</ComponentPreview>
+
+### Privacy Properties Dialog
+<ComponentPreview name="alert-privacy-demo" language="tsx">
+{`import { Button } from "@/components/ui/button";
+import {
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import React from "react";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+
+interface PrivacySettingsDialogType {
+  settings: { [key: string]: boolean };
+  onSave: (settings: { [key: string]: boolean }) => void;
+}
+const PrivacySettingsDialog = ({
+  settings = {
+    "Allow Cookies": true,
+    "Share Data with Partners": false,
+    "Receive Marketing Emails": true,
+  },
+  onSave,
+}: PrivacySettingsDialogType) => {
+  const [localSettings, setLocalSettings] = React.useState(settings);
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const handleSave = () => {
+    onSave(localSettings);
+    setIsOpen(false);
+  };
+
+  return (
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="dark:border-gray-800 dark:hover:bg-gray-900"
+        >
+          Privacy Settings
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent className="dark:border-gray-800 dark:bg-black">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Privacy Settings</AlertDialogTitle>
+          <AlertDialogDescription>
+            Manage your privacy preferences.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <div className="grid gap-4 py-4">
+          {Object.entries(localSettings).map(([key, value]) => (
+            <div key={key} className="flex items-center justify-between">
+              <Label htmlFor={key}>{key}</Label>
+              <Switch
+                id={key}
+                checked={value as boolean}
+                onCheckedChange={(checked) =>
+                  setLocalSettings((prev) => ({ ...prev, [key]: checked }))
+                }
+              />
+            </div>
+          ))}
+        </div>
+        <AlertDialogFooter>
+          <AlertDialogCancel
+            onClick={() => setIsOpen(false)}
+            className="dark:border-gray-800 dark:hover:bg-gray-900"
+          >
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction onClick={handleSave}>
+            Save Settings
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+
+export default PrivacySettingsDialog;
+`}
+</ComponentPreview>
+
+### OTP Verify Dialog
+<ComponentPreview name="alert-otp-demo" language="tsx">
+{`import { cn } from "@/lib/utils";
+import { OTPInput, SlotProps } from "input-otp";
+import { Minus } from "lucide-react";
+import React from "react";
+import { Button } from "@/components/ui/button";
+import {
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+
+interface TwoFactorAuthDialogType {
+  onVerify: (code: string) => void;
+}
+
+interface OTPType {
+  code: string;
+  setCode: (code: string) => void;
+}
+const OTP = ({ code, setCode }: OTPType) => {
+  return (
+    <div className="space-y-2">
+      <OTPInput
+        id="input-45"
+        containerClassName="flex items-center gap-3 has-[:disabled]:opacity-50"
+        maxLength={6}
+        value={code}
+        onChange={setCode}
+        render={({ slots }) => (
+          <>
+            <div className="flex">
+              {slots.slice(0, 3).map((slot, idx) => (
+                <Slot key={idx} {...slot} />
+              ))}
+            </div>
+
+            <div className="text-muted-foreground/80">
+              <Minus size={16} strokeWidth={2} aria-hidden="true" />
+            </div>
+
+            <div className="flex">
+              {slots.slice(3).map((slot, idx) => (
+                <Slot key={idx} {...slot} />
+              ))}
+            </div>
+          </>
+        )}
+      />
+    </div>
+  );
+};
+
+function Slot(props: SlotProps) {
+  return (
+    <div
+      className={cn(
+        "relative flex size-9 items-center justify-center border-y border-e border-input dark:bg-black dark:border-gray-800 font-medium text-foreground shadow-sm shadow-black/5 ring-offset-background transition-all first:rounded-s-lg first:border-s last:rounded-e-lg",
+        {
+          "z-10 border border-ring ring-2 ring-ring/30 ring-offset-2":
+            props.isActive,
+        }
+      )}
+    >
+      {props.char !== null && <div>{props.char}</div>}
+    </div>
+  );
+}
+
+const TwoFactorAuthDialog = ({
+  onVerify = (code) => {},
+}: TwoFactorAuthDialogType) => {
+  const [code, setCode] = React.useState("");
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const handleVerify = () => {
+    if (code.length === 6) {
+      onVerify(code);
+      setIsOpen(false);
+      setCode("");
+    }
+  };
+
+  return (
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="dark:border-gray-800 dark:hover:bg-gray-900"
+        >
+          Verify 2FA
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent className="dark:border-gray-800 dark:bg-black">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Two-Factor Authentication</AlertDialogTitle>
+          <AlertDialogDescription>
+            Enter the 6-digit code from your authenticator app.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <OTP code={code} setCode={setCode} />
+        <AlertDialogFooter>
+          <AlertDialogCancel
+            onClick={() => setIsOpen(false)}
+            className="dark:border-gray-800 dark:hover:bg-gray-900"
+          >
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction
+            onClick={handleVerify}
+            disabled={code.length !== 6}
+          >
+            Verify
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+
+export default TwoFactorAuthDialog;
+`}
+</ComponentPreview>
+
+### Coupon Dialog
+<ComponentPreview name="alert-coupon-demo" language="tsx">
+{`import { Button } from "@/components/ui/button";
+import {
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import React from "react";
+import { Input } from "@/components/ui/input";
+
+interface CouponCodeDialogType {
+  onApply: (code: string) => void;
+}
+const CouponCodeDialog = ({ onApply }: CouponCodeDialogType) => {
+  const [code, setCode] = React.useState("");
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const handleApply = () => {
+    if (code) {
+      onApply(code);
+      setIsOpen(false);
+      setCode("");
+    }
+  };
+
+  return (
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="dark:border-gray-800 dark:hover:bg-gray-900"
+        >
+          Apply Coupon
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent className="dark:border-gray-800 dark:bg-black">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Apply Coupon Code</AlertDialogTitle>
+          <AlertDialogDescription>
+            Enter a valid coupon code to get a discount.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <Input
+          type="text"
+          placeholder="Enter coupon code"
+          className="dark:border-gray-800 dark:bg-black"
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+        />
+        <AlertDialogFooter>
+          <AlertDialogCancel
+            onClick={() => setIsOpen(false)}
+            className="dark:border-gray-800 dark:hover:bg-gray-900"
+          >
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction onClick={handleApply} disabled={!code}>
+            Apply Coupon
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+export default CouponCodeDialog;
 `}
 </ComponentPreview>
