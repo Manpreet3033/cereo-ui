@@ -28,7 +28,7 @@ export default function Page() {
         <p className="mt-4 text-md font-medium text-black dark:text-indigo-500 animate-pulse">
           ✨ New Components Will Be Coming Every Week! ✨
         </p>
-        <div className="mt-6 flex justify-center space-x-4">
+        <div className="mt-6 flex flex-wrap gap-y-4 justify-center space-x-4">
           <Link
             href="/docs/accordion"
             className={cn(
@@ -41,7 +41,8 @@ export default function Page() {
           </Link>
 
           <Link
-            href="/docs/accordion"
+            href="https://github.com/Manpreet3033/cereo-ui.git"
+            target="_blank"
             className={cn(
               "inline-flex items-center justify-center px-6 py-2.5 text-sm font-medium transition-colors rounded-md",
               "bg-primary text-white dark:text-black hover:bg-primary/90",
@@ -52,6 +53,18 @@ export default function Page() {
             <span className="ml-2">
               <Icons.gitHub className="w-5 h-5" />
             </span>
+          </Link>
+          <Link
+            href="https://buymeacoffee.com/manpreet3033"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              "inline-flex items-center justify-center px-6 py-2.5 text-sm font-medium transition-colors rounded-md",
+              "bg-yellow-400 text-black hover:bg-yellow-500",
+              "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400"
+            )}
+          >
+            ☕ Buy Me a Coffee
           </Link>
         </div>
       </header>
